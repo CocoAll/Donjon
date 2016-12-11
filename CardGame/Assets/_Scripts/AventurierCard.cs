@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ConfrontationCard : MonoBehaviour {
+public class AventurierCard : MonoBehaviour {
 
     [SerializeField]
     private int _level1BattleValue = 0;

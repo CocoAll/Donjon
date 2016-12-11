@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections;
 
-public class BaseDeckManager : MonoBehaviour {
+public class DonjonDeckManager : MonoBehaviour {
 
 
     [SerializeField]

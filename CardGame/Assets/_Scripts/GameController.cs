@@ -6,22 +6,22 @@ public class GameController : MonoBehaviour {
 
     private int _hazardLevel = 1;
     private int _hazardMaxLevel = 3;
-    private int _lifePoints = 20;
+    private int _notorietePoints = 20;
 
 
     [SerializeField]
-    private Text _lifePointText = null;
+    private Text _notorietePointText = null;
 
     [SerializeField]
-    private Text _hazardLevelText = null;
+    private Text _aventurierLevelText = null;
 
     [SerializeField]
-    private GameObject _playerDeckObject = null;
-    private BaseDeckManager bdm = null;
+    private GameObject _donjonDeckObject = null;
+    private DonjonDeckManager bdm = null;
 
     [SerializeField]
-    private GameObject _hazardDeckObject = null;
-    private ConfrontationCard ccm = null;
+    private GameObject _aventurierDeckObject = null;
+    private AventurierCard ccm = null;
 
     [SerializeField]
     private GameObject _playedCardObject = null;
@@ -34,12 +34,12 @@ public class GameController : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        _lifePointText.text = "" + _lifePoints;
-        _hazardLevelText.text = "" + _hazardLevel;
+        _notorietePointText.text = "" + _notorietePoints;
+        _aventurierLevelText.text = "" + _hazardLevel;
 
-        bdm = _playerDeckObject.GetComponent<BaseDeckManager>();
-        ccm = _hazardDeckObject.GetComponent<ConfrontationCard>();
-        pcm = _hazardDeckObject.GetComponent<PlayedCard>();
+        bdm = _aventurierLevelText.GetComponent<DonjonDeckManager>();
+        ccm = _aventurierDeckObject.GetComponent<AventurierCard>();
+        pcm = _aventurierDeckObject.GetComponent<PlayedCard>();
 
     }
 	
