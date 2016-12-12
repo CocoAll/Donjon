@@ -3,14 +3,17 @@ using System.Collections;
 
 public class PlayableCard : MonoBehaviour {
 
-    [SerializeField]
-    private int _battleValue = 0;
+    public string _name = "";
 
-    private int _discardPrice = 1;
+    public int _battleValue = 0;
+
+    public int _discardPrice = 1;
+
+    public int _effet = 0;
 
 	
 	void Start () {
-        _battleValue = Random.Range(-1, 3);
+        
 	}
 	
 

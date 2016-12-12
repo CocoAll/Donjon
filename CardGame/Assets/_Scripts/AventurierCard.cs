@@ -3,22 +3,26 @@ using System.Collections;
 
 public class AventurierCard : MonoBehaviour {
 
-    [SerializeField]
-    private int _level1BattleValue = 0;
-    [SerializeField]
-    private int _level2BattleValue = 0;
-    [SerializeField]
-    private int _level3BattleValue = 0;
 
-    [SerializeField]
-    private int _battleValueAdded = 0;
+    public string _aventurierName = "";
+   
+    public int _level1BattleValue = 0;
+
+    public int _level2BattleValue = 0;
+
+    public int _level3BattleValue = 0;
+
+    public string _donjonBonusName = "";
+
+    public int _battleValueAdded = 0;
+
+    public int _battleEffect = 0;
+
+    public int _defausseCost = 0;
 
     // Use this for initialization
     void Start () {
-	    _level1BattleValue = Random.Range(0, 6);
-        _level2BattleValue = Random.Range(1, 10);
-        _level3BattleValue = Random.Range(3, 15);
-        _battleValueAdded = Random.Range(-1, 5);
+
     }
 	
 	// Update is called once per frame

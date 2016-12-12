@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<decks>
+	<deck name="Base">
+		<card name="a" resistance="-1" effet="0" defausse="1" nombre="5"/>
+		<card name="b" resistance="0" effet="0" defausse="1" nombre="6"/>
+		<card name="c" resistance="0" effet="0" defausse="1" nombre="3"/>
+		<card name="d" resistance="0" effet="0" defausse="1" nombre="3"/>
+		<card name="e" resistance="0" effet="0" defausse="1" nombre="1"/>
+	</deck>
+	
+	<deck name="Confrontation">
+		<card name="a" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="a" resistance="0" effet="0" defausse="1" />
+		<card name="b" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="b" resistance="0" effet="0" defausse="1" />
+		<card name="c" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="c" resistance="0" effet="0" defausse="1" />
+		<card name="d" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="d" resistance="0" effet="0" defausse="1" />
+		<card name="e" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="e" resistance="0" effet="0" defausse="1" />
+		<card name="f" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="f" resistance="0" effet="0" defausse="1" />
+		<card name="g" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="g" resistance="0" effet="0" defausse="1" />
+		<card name="h" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="h" resistance="0" effet="0" defausse="1" />
+		<card name="i" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="i" resistance="0" effet="0" defausse="1" />
+		<card name="j" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="j" resistance="0" effet="0" defausse="1" />
+		<card name="k" nv1="1" nv2="3" nv3="6" pioche="2" newCardName="k" resistance="1" effet="0" defausse="1" />
+		<card name="l" nv1="1" nv2="3" nv3="6" pioche="2" newCardName="l" resistance="1" effet="0" defausse="1" />
+		<card name="m" nv1="1" nv2="3" nv3="6" pioche="2" newCardName="m" resistance="1" effet="0" defausse="1" />
+		<card name="n" nv1="1" nv2="3" nv3="6" pioche="2" newCardName="n" resistance="1" effet="0" defausse="1" />
+		<card name="o" nv1="1" nv2="3" nv3="6" pioche="2" newCardName="o" resistance="1" effet="0" defausse="1" />
+		<card name="p" nv1="1" nv2="3" nv3="6" pioche="2" newCardName="p" resistance="1" effet="0" defausse="1" />
+		<card name="q" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="q" resistance="2" effet="0" defausse="1" />
+		<card name="r" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="r" resistance="2" effet="0" defausse="1" />
+		<card name="s" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="s" resistance="2" effet="0" defausse="1" />
+		<card name="t" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="t" resistance="2" effet="0" defausse="1" />
+		<card name="u" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="u" resistance="2" effet="0" defausse="1" />
+		<card name="v" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="v" resistance="2" effet="0" defausse="1" />
+		<card name="w" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="w" resistance="2" effet="0" defausse="1" />
+		<card name="x" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="x" resistance="2" effet="0" defausse="1" />
+		<card name="y" nv1="4" nv2="7" nv3="11" pioche="4" newCardName="y" resistance="3" effet="0" defausse="1" />
+		<card name="z" nv1="4" nv2="7" nv3="11" pioche="4" newCardName="z" resistance="3" effet="0" defausse="1" />
+		<card name="aa" nv1="4" nv2="7" nv3="11" pioche="4" newCardName="aa" resistance="3" effet="0" defausse="1" />
+		<card name="bb" nv1="4" nv2="7" nv3="11" pioche="4" newCardName="bb" resistance="3" effet="0" defausse="1" />
+		<card name="cc" nv1="5" nv2="9" nv3="14" pioche="5" newCardName="cc" resistance="3" effet="0" defausse="1" />
+		<card name="dd" nv1="5" nv2="9" nv3="14" pioche="5" newCardName="dd" resistance="3" effet="0" defausse="1" />
+	</deck>
+	
+	<deck name="Usure">
+		<card name="a" resistance="0" effet="0" defausse="2" lvlusure="1" nombre="2"/>
+		<card name="b" resistance="0" effet="0" defausse="2" lvlusure="2" nombre="1"/>
+		<card name="c" resistance="0" effet="0" defausse="2" lvlusure="1" nombre="1"/>
+		<card name="d" resistance="0" effet="0" defausse="2" lvlusure="1" nombre="1"/>
+		<card name="e" resistance="-1" effet="0" defausse="2" lvlusure="1" nombre="2"/>
+		<card name="f" resistance="-2" effet="0" defausse="2" lvlusure="1" nombre="1"/>
+		<card name="g" resistance="-3" effet="0" defausse="2" lvlusure="1" nombre="1"/>
+		<card name="h" resistance="-4" effet="0" defausse="2" lvlusure="2" nombre="1"/>
+		<card name="i" resistance="-5" effet="0" defausse="2" lvlusure="2" nombre="1"/>
+	</deck>
+	
+	<deck name="Routard">
+		<card name="a" niveau="0" pioche="5" effet="0"/>
+		<card name="b" niveau="20" pioche="6" effet="0"/>
+		<card name="c" niveau="25" pioche="7" effet="0"/>
+		<card name="d" niveau="16" pioche="7" effet="0"/>
+		<card name="e" niveau="0" pioche="0" effet="0"/>
+		<card name="f" niveau="30" pioche="8" effet="0"/>
+		<card name="g" niveau="22" pioche="9" effet="0"/>
+		<card name="h" niveau="35" pioche="9" effet="0"/>
+		<card name="i" niveau="40" pioche="10" effet="0"/>
+		<card name="j" niveau="52" pioche="10" effet="0"/>
+	</deck>
+
+</decks>
