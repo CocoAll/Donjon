@@ -3,7 +3,7 @@ using System.Collections;
 
 public class AventurierCard : MonoBehaviour {
 
-
+    //Données pour le combats
     public string _aventurierName = "";
    
     public int _level1BattleValue = 0;
@@ -12,13 +12,15 @@ public class AventurierCard : MonoBehaviour {
 
     public int _level3BattleValue = 0;
 
-    public string _donjonBonusName = "";
+    //Pour accéder aux informations pour les transitions entre les
+    //différents GameObject
+    public GameObject _selectedAventurierCardSpot = null;
 
-    public int _battleValueAdded = 0;
+    public GameObject _aventurierCardSpot = null;
 
-    public int _battleEffect = 0;
+    public AventurierDeckManager _ddm = null;
 
-    public int _defausseCost = 0;
+
 
     // Use this for initialization
     void Start () {
@@ -29,6 +31,28 @@ public class AventurierCard : MonoBehaviour {
 	void Update () {
 	
 	}
+
+
+    //Fonction pour choisir une des carte Aventurier
+    //Lorsque les deux sonts sur
+    public void ChooseCard()
+    {
+        if (this.transform.parent == _aventurierCardSpot.transform && _selectedAventurierCardSpot.GetComponent<ChoosenAventurier>()._choosenOne == null)
+        {
+            foreach (GameObject gO in _aventurierCardSpot.GetComponent<PlayedCard>()._playedCardlist)
+            {
+                if(gO != this.gameObject)
+                {
+                    _ddm._aventurierDefausseDeck.Add(gO);
+                    gO.transform.SetParent(null);
+                }
+
+            }
+            _selectedAventurierCardSpot.GetComponent<ChoosenAventurier>()._choosenOne = this.gameObject;
+            this.transform.SetParent(_selectedAventurierCardSpot.transform);
+        }
+
+    }
 
 
     //***************************************************************************//

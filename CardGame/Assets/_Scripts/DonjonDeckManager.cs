@@ -7,8 +7,8 @@ public class DonjonDeckManager : MonoBehaviour {
 
 
     public GameObject _cardModel = null;
-    public List<GameObject> _cardDeck = null;
-    public List<GameObject> _defausseDeck = null;
+    public List<GameObject> _donjonDeck = null;
+    public List<GameObject> _donjonDefausseDeck = null;
     [SerializeField]
     private GameObject _donjonCardSpot = null;
     private PlayedCard _dcm = null;
@@ -16,27 +16,14 @@ public class DonjonDeckManager : MonoBehaviour {
 	//On initialise les arrays
     //Puis melange le deck de base
 	void Start () {
-        _defausseDeck = new List<GameObject>();
-        _cardDeck = new List<GameObject>();
+        _donjonDefausseDeck = new List<GameObject>();
+        _donjonDeck = new List<GameObject>();
         _dcm = _donjonCardSpot.GetComponent<PlayedCard>();
-       /* for(int i = 0; i < 18; i++)
-        {
-            GameObject card = Instantiate(_cardModel);
-            card.transform.SetParent(this.transform.parent);
-            _cardDeck.Add(card);
-        }*/
-	
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        //Permet de remettre le deck lorsque celui ci est vide
-	    if(_cardDeck.Count == 0)
-        {
-            _cardDeck = _defausseDeck;
-            _defausseDeck = new List<GameObject>();
-        }
 	}
 
 
@@ -54,11 +41,17 @@ public class DonjonDeckManager : MonoBehaviour {
 
    public void DrawCard()
     {
-        if(_cardDeck.Count > 0)
+        if(_donjonDeck.Count > 0)
         {
-        _dcm._playedCardlist.Add(_cardDeck[_cardDeck.Count - 1]);
-        _cardDeck.Remove(_cardDeck[_cardDeck.Count - 1]);
-        _dcm._playedCardlist[_dcm._playedCardlist.Count - 1].transform.SetParent(_donjonCardSpot.transform);
+             _dcm._playedCardlist.Add(_donjonDeck[_donjonDeck.Count - 1]);
+            _donjonDeck.Remove(_donjonDeck[_donjonDeck.Count - 1]);
+            _dcm._playedCardlist[_dcm._playedCardlist.Count - 1].transform.SetParent(_donjonCardSpot.transform);
+            _dcm._playedCardlist[_dcm._playedCardlist.Count - 1].transform.localScale = new Vector3(1, 1, 1);
+        }
+        else if (_donjonDeck.Count == 0)
+        {
+            //TODO
+            //Melanger défausse, ajouter carte usure puis piocher
         }
     }
 

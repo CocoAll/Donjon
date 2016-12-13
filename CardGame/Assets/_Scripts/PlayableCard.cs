@@ -11,7 +11,6 @@ public class PlayableCard : MonoBehaviour {
 
     public int _effet = 0;
 
-	
 	void Start () {
         
 	}
@@ -32,5 +31,13 @@ public class PlayableCard : MonoBehaviour {
     public int GetDiscardPrice()
     {
         return _discardPrice;
+    }
+
+    public void UseEffet()
+    {
+        if(_effet > 0)
+        {
+
+        }
     }
 }
