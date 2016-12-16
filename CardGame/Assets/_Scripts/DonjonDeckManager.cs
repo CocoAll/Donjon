@@ -25,12 +25,6 @@ public class DonjonDeckManager : MonoBehaviour {
         _dcm = _donjonCardSpot.GetComponent<PlayedCard>();
         UpdateText();
     }
-	
-	// Update is called once per frame
-	void Update () {
-
-
-	}
 
 
     //Fonction pour melanger de façon aléatoire un deck
@@ -64,6 +58,7 @@ public class DonjonDeckManager : MonoBehaviour {
                 //Melanger défausse, ajouter carte usure puis piocher
             }
 
+            _gcm.HasDraw();
             UpdateText();
         }
     }

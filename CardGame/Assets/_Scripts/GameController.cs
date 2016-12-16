@@ -8,7 +8,7 @@ using System.IO;
 
 public class GameController : MonoBehaviour {
 
-    private int _hazardLevel = 1;
+    private int _aventurierLevel = 1;
     private int _hazardMaxLevel = 3;
     private int _notorietePoints = 20;
     [SerializeField]
@@ -38,6 +38,14 @@ public class GameController : MonoBehaviour {
     private GameObject _choosenAventurierSpot = null;
     private ChoosenAventurier _cam = null;
 
+    [SerializeField]
+    private Text _donjonBattleValueText = null;
+    [SerializeField]
+    private Text _aventurierBattleValueText = null;
+
+    public int _aventurierBattleValue = 0;
+    public int _donjonBattleValue = 0;
+
     void Start ()
     {
         _bdm = _donjonDeckObject.GetComponent<DonjonDeckManager>();
@@ -57,12 +65,11 @@ public class GameController : MonoBehaviour {
         LoadAventurierDeck();
 
         _notorietePointText.text = "" + _notorietePoints;
-        _aventurierLevelText.text = "" + _hazardLevel;
+        _aventurierLevelText.text = "" + _aventurierLevel;
 
 
         GameTurnManager.ChangeState(GameState.ChoisirAventurier);
     }
-
 
     //Fonction pour lire le fichier Xml chargé
     //et récupérer le deck de base du donjon
@@ -98,6 +105,8 @@ public class GameController : MonoBehaviour {
 
     }
 
+    //Fonction pour lire le fichier Xml chargé
+    //et récupérer le deck aventurier
     void LoadAventurierDeck()
     {
         XmlNodeList list = _xmlDoc.DocumentElement.SelectNodes("/decks/deck");
@@ -132,10 +141,7 @@ public class GameController : MonoBehaviour {
         _ccm.ShuffleDeck(_ccm._aventurierDeck);
     }
 
-    void Update () {
-	
-	}
-
+    //Permet de vérifier si le joueur peux piocher gratuitement
     public bool CanDrawDonjonCard()
     {
         bool canDraw = false;
@@ -151,4 +157,47 @@ public class GameController : MonoBehaviour {
         return canDraw;
     }
 
+
+    //Fonction appelé après chaque pioche dans le deck donjon
+    public void HasDraw()
+    {
+        UpdateDonjonCombatValue();
+    }
+
+    //Fonction mettant a jour les valeurs pour le combat
+    public void UpdateDonjonCombatValue()
+    {
+        int donjonValue = 0;
+        foreach (GameObject gO in _pcm._playedCardlist)
+        {
+            donjonValue += gO.GetComponent<PlayableCard>()._battleValue;
+        }
+
+        _donjonBattleValueText.text = "" + donjonValue;
+        _donjonBattleValue = donjonValue;
+
+    }
+
+    //Fonction pour prendre la bonne Valeur de combat pour l'aventurier
+    public void ChooseGoodAventurierBattleValue()
+    {
+        switch (_aventurierLevel)
+        {
+            case 1:
+                _aventurierBattleValue = _cam._choosenOne.GetComponent<AventurierCard>()._level1BattleValue;
+                break;
+            case 2:
+                _aventurierBattleValue = _cam._choosenOne.GetComponent<AventurierCard>()._level2BattleValue;
+                break;
+            case 3:
+                _aventurierBattleValue = _cam._choosenOne.GetComponent<AventurierCard>()._level3BattleValue;
+                break;
+        }
+    }
+
+    public void UpdateAventurierCombatValue()
+    {
+        ChooseGoodAventurierBattleValue();
+        _aventurierBattleValueText.text = "" + _aventurierBattleValue;
+    }
 }

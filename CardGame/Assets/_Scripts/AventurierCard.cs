@@ -23,18 +23,6 @@ public class AventurierCard : MonoBehaviour {
     public AventurierDeckManager _ddm = null;
 
 
-
-    // Use this for initialization
-    void Start () {
-
-    }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-
     //Fonction pour choisir une des carte Aventurier
     //Lorsque deux cartes sont présenté au joueur
     public void ChooseCard()
@@ -47,12 +35,13 @@ public class AventurierCard : MonoBehaviour {
                 {
                     _ddm._aventurierDefausseDeck.Add(gO);
                     gO.transform.SetParent(null);
+
                 }
 
             }
             _selectedAventurierCardSpot.GetComponent<ChoosenAventurier>()._choosenOne = this.gameObject;
             this.transform.SetParent(_selectedAventurierCardSpot.transform);
-
+            _aventurierCardSpot.GetComponent<PlayedCard>()._playedCardlist.Clear();
             GameTurnManager.ChangeState(GameState.PreparerDonjon);
         }
 

@@ -20,7 +20,7 @@ public class GameTurnManager : MonoBehaviour {
 
 
     //Etat du tour de jeu actuel
-    private static GameState _actualGameState = 0;
+    public static GameState _actualGameState = 0;
 
     //Actions possibles par le Joueur
     public static bool _canDrawDonjonCard = false;
@@ -32,10 +32,6 @@ public class GameTurnManager : MonoBehaviour {
 
     void Start () {
         ChangeState(GameState.ChoisirAventurier) ;
-	}
-	
-	void Update () {
-	
 	}
 
     //Fonction qui permet de changer d'état le jeu, puis et gérer les actions possibles du joueur
