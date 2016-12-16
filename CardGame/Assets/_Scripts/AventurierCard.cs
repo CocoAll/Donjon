@@ -12,6 +12,8 @@ public class AventurierCard : MonoBehaviour {
 
     public int _level3BattleValue = 0;
 
+    public int _maxFreeCards = 0;
+
     //Pour accéder aux informations pour les transitions entre les
     //différents GameObject
     public GameObject _selectedAventurierCardSpot = null;
@@ -34,7 +36,7 @@ public class AventurierCard : MonoBehaviour {
 
 
     //Fonction pour choisir une des carte Aventurier
-    //Lorsque les deux sonts sur
+    //Lorsque deux cartes sont présenté au joueur
     public void ChooseCard()
     {
         if (this.transform.parent == _aventurierCardSpot.transform && _selectedAventurierCardSpot.GetComponent<ChoosenAventurier>()._choosenOne == null)
@@ -50,6 +52,8 @@ public class AventurierCard : MonoBehaviour {
             }
             _selectedAventurierCardSpot.GetComponent<ChoosenAventurier>()._choosenOne = this.gameObject;
             this.transform.SetParent(_selectedAventurierCardSpot.transform);
+
+            GameTurnManager.ChangeState(GameState.PreparerDonjon);
         }
 
     }

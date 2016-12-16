@@ -14,6 +14,8 @@ public class DonjonDeckManager : MonoBehaviour {
     private PlayedCard _dcm = null;
     [SerializeField]
     private Text _nbCardText = null;
+    [SerializeField]
+    private GameController _gcm = null;
 
 	//On initialise les arrays
     //Puis melange le deck de base
@@ -26,6 +28,7 @@ public class DonjonDeckManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
 
 	}
 
@@ -45,20 +48,24 @@ public class DonjonDeckManager : MonoBehaviour {
 
    public void DrawCard()
     {
-        if(_donjonDeck.Count > 0)
+        if (_gcm.CanDrawDonjonCard() == true)
         {
-             _dcm._playedCardlist.Add(_donjonDeck[_donjonDeck.Count - 1]);
-            _donjonDeck.Remove(_donjonDeck[_donjonDeck.Count - 1]);
-            _dcm._playedCardlist[_dcm._playedCardlist.Count - 1].transform.SetParent(_donjonCardSpot.transform);
-            _dcm._playedCardlist[_dcm._playedCardlist.Count - 1].transform.localScale = new Vector3(1, 1, 1);
-        }
-        else if (_donjonDeck.Count == 0)
-        {
-            //TODO
-            //Melanger défausse, ajouter carte usure puis piocher
-        }
+            _gcm._drawnDonjonCard++;
+            if (_donjonDeck.Count > 0)
+            {
+                _dcm._playedCardlist.Add(_donjonDeck[_donjonDeck.Count - 1]);
+                _donjonDeck.Remove(_donjonDeck[_donjonDeck.Count - 1]);
+                _dcm._playedCardlist[_dcm._playedCardlist.Count - 1].transform.SetParent(_donjonCardSpot.transform);
+                _dcm._playedCardlist[_dcm._playedCardlist.Count - 1].transform.localScale = new Vector3(1, 1, 1);
+            }
+            else if (_donjonDeck.Count == 0)
+            {
+                //TODO
+                //Melanger défausse, ajouter carte usure puis piocher
+            }
 
-        UpdateText();
+            UpdateText();
+        }
     }
 
     private void UpdateText()

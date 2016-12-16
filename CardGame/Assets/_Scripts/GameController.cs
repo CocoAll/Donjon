@@ -16,29 +16,34 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     private Text _aventurierLevelText = null;
 
-
     [SerializeField]
     private GameObject _donjonDeckObject = null;
-    private DonjonDeckManager bdm = null;
+    private DonjonDeckManager _bdm = null;
 
     [SerializeField]
     private GameObject _aventurierDeckObject = null;
-    private AventurierDeckManager ccm = null;
+    private AventurierDeckManager _ccm = null;
 
     [SerializeField]
     private GameObject _playedCardObject = null;
-    private PlayedCard pcm = null;
+    private PlayedCard _pcm = null;
 
     private string _xmlPath = null;
     private XmlDocument _xmlDoc = null;
 
     public Canvas _screen = null;
 
+    public int _drawnDonjonCard = 0;
+    [SerializeField]
+    private GameObject _choosenAventurierSpot = null;
+    private ChoosenAventurier _cam = null;
+
     void Start ()
     {
-        bdm = _donjonDeckObject.GetComponent<DonjonDeckManager>();
-        ccm = _aventurierDeckObject.GetComponent<AventurierDeckManager>();
-        pcm = _playedCardObject.GetComponent<PlayedCard>();
+        _bdm = _donjonDeckObject.GetComponent<DonjonDeckManager>();
+        _ccm = _aventurierDeckObject.GetComponent<AventurierDeckManager>();
+        _pcm = _playedCardObject.GetComponent<PlayedCard>();
+        _cam = _choosenAventurierSpot.GetComponent<ChoosenAventurier>();
 
         _xmlPath = Application.dataPath + @"/CardsList.xml";
         _xmlDoc = new XmlDocument();
@@ -55,7 +60,7 @@ public class GameController : MonoBehaviour {
         _aventurierLevelText.text = "" + _hazardLevel;
 
 
-
+        GameTurnManager.ChangeState(GameState.ChoisirAventurier);
     }
 
 
@@ -77,19 +82,19 @@ public class GameController : MonoBehaviour {
                     Debug.Log(number);
                     for (int i = 0; i< number; i++)
                     {
-                        GameObject cardPrefab = Instantiate(bdm._cardModel);
+                        GameObject cardPrefab = Instantiate(_bdm._cardModel);
                         PlayableCard datas = cardPrefab.GetComponent<PlayableCard>();
                         datas._name = card.Attributes["name"].Value;
                         datas._battleValue = int.Parse(card.Attributes["resistance"].Value);
                         datas._discardPrice = int.Parse(card.Attributes["defausse"].Value);
                         datas._effet = int.Parse(card.Attributes["effet"].Value);
-                        bdm._donjonDeck.Add(cardPrefab);
+                        _bdm._donjonDeck.Add(cardPrefab);
                     }
 
                 }
             }
         }
-        bdm.ShuffleDeck(bdm._donjonDeck);
+        _bdm.ShuffleDeck(_bdm._donjonDeck);
 
     }
 
@@ -104,7 +109,7 @@ public class GameController : MonoBehaviour {
                 XmlNodeList cards = node.ChildNodes;
                 foreach (XmlNode card in cards)
                 {
-                    GameObject cardPrefab = Instantiate(ccm._cardModel);
+                    GameObject cardPrefab = Instantiate(_ccm._cardModel);
                     PlayableCard datas1 = cardPrefab.GetComponent<PlayableCard>(); ;
                     AventurierCard datas2 = cardPrefab.GetComponent<AventurierCard>();
                     datas1._name = card.Attributes["newCardName"].Value;
@@ -115,20 +120,35 @@ public class GameController : MonoBehaviour {
                     datas2._level1BattleValue = int.Parse(card.Attributes["nv1"].Value);
                     datas2._level2BattleValue = int.Parse(card.Attributes["nv2"].Value);
                     datas2._level3BattleValue = int.Parse(card.Attributes["nv3"].Value);
-                    datas2._aventurierCardSpot = ccm._aventurierCardSpot;
-                    datas2._selectedAventurierCardSpot = ccm._selectedAventurierCardSpot;
-                    ccm._aventurierDeck.Add(cardPrefab);
-                    datas2._ddm = this.ccm;
+                    datas2._maxFreeCards = int.Parse(card.Attributes["pioche"].Value);
+                    datas2._aventurierCardSpot = _ccm._aventurierCardSpot;
+                    datas2._selectedAventurierCardSpot = _ccm._selectedAventurierCardSpot;
+                    _ccm._aventurierDeck.Add(cardPrefab);
+                    datas2._ddm = this._ccm;
                 }
 
             }
         }
-        ccm.ShuffleDeck(ccm._aventurierDeck);
+        _ccm.ShuffleDeck(_ccm._aventurierDeck);
     }
 
     void Update () {
 	
 	}
 
+    public bool CanDrawDonjonCard()
+    {
+        bool canDraw = false;
+        if (_cam._choosenOne == null)
+        {
+            return canDraw;
+        }
+        if (_drawnDonjonCard < _cam._choosenOne.GetComponent<AventurierCard>()._maxFreeCards && GameTurnManager._canDrawDonjonCard == true)
+        {
+            canDraw = true;
+        }
+
+        return canDraw;
+    }
 
 }
