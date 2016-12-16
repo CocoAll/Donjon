@@ -12,6 +12,8 @@ public class DonjonDeckManager : MonoBehaviour {
     [SerializeField]
     private GameObject _donjonCardSpot = null;
     private PlayedCard _dcm = null;
+    [SerializeField]
+    private Text _nbCardText = null;
 
 	//On initialise les arrays
     //Puis melange le deck de base
@@ -19,7 +21,8 @@ public class DonjonDeckManager : MonoBehaviour {
         _donjonDefausseDeck = new List<GameObject>();
         _donjonDeck = new List<GameObject>();
         _dcm = _donjonCardSpot.GetComponent<PlayedCard>();
-	}
+        UpdateText();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -37,6 +40,7 @@ public class DonjonDeckManager : MonoBehaviour {
             array[i] = array[r];
             array[r] = tmp;
         }
+        UpdateText();
     }
 
    public void DrawCard()
@@ -53,8 +57,13 @@ public class DonjonDeckManager : MonoBehaviour {
             //TODO
             //Melanger défausse, ajouter carte usure puis piocher
         }
+
+        UpdateText();
     }
 
-
+    private void UpdateText()
+    {
+        _nbCardText.text = "" + _donjonDeck.Count;
+    }
 
 }

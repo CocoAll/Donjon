@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class AventurierDeckManager : MonoBehaviour {
@@ -11,6 +12,8 @@ public class AventurierDeckManager : MonoBehaviour {
     public GameObject _aventurierCardSpot = null;
     private ChoosenAventurier _acsm = null;
     private PlayedCard _pcm = null;
+    [SerializeField]
+    private Text _nbCardText = null;
 
     // Use this for initialization
     void Start () {
@@ -18,6 +21,7 @@ public class AventurierDeckManager : MonoBehaviour {
         _aventurierDefausseDeck = new List<GameObject>();
         _pcm = _aventurierCardSpot.GetComponent<PlayedCard>();
         _acsm = _selectedAventurierCardSpot.GetComponent<ChoosenAventurier>();
+        UpdateText();
     }
 	
 	// Update is called once per frame
@@ -35,6 +39,7 @@ public class AventurierDeckManager : MonoBehaviour {
             array[i] = array[r];
             array[r] = tmp;
         }
+        UpdateText();
     }
 
 
@@ -70,5 +75,11 @@ public class AventurierDeckManager : MonoBehaviour {
             //TODO
             //Re-melanger Defausse, incrémenter/vérifier état de la partie : Fin ? ou juste plus dur après.
         }
+        UpdateText();
+    }
+
+    private void UpdateText()
+    {
+        _nbCardText.text = "" + _aventurierDeck.Count;
     }
 }
