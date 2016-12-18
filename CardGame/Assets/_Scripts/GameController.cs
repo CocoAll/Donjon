@@ -9,7 +9,7 @@ using System.IO;
 public class GameController : MonoBehaviour {
 
     private int _aventurierLevel = 1;
-    private int _hazardMaxLevel = 3;
+    private int _aventurierMaxLevel = 3;
     private int _notorietePoints = 20;
     [SerializeField]
     private Text _notorietePointText = null;
@@ -18,7 +18,7 @@ public class GameController : MonoBehaviour {
 
     [SerializeField]
     private GameObject _donjonDeckObject = null;
-    private DonjonDeckManager _bdm = null;
+    private DonjonDeckManager _ddm = null;
 
     [SerializeField]
     private GameObject _aventurierDeckObject = null;
@@ -48,7 +48,7 @@ public class GameController : MonoBehaviour {
 
     void Start ()
     {
-        _bdm = _donjonDeckObject.GetComponent<DonjonDeckManager>();
+        _ddm = _donjonDeckObject.GetComponent<DonjonDeckManager>();
         _ccm = _aventurierDeckObject.GetComponent<AventurierDeckManager>();
         _pcm = _playedCardObject.GetComponent<PlayedCard>();
         _cam = _choosenAventurierSpot.GetComponent<ChoosenAventurier>();
@@ -71,6 +71,14 @@ public class GameController : MonoBehaviour {
         GameTurnManager.ChangeState(GameState.ChoisirAventurier);
     }
 
+    void Update()
+    {
+        if(GameTurnManager._canDrawDonjonCard == true)
+        {
+            UpdateAventurierCombatValue();
+        }
+    }
+
     //Fonction pour lire le fichier Xml chargé
     //et récupérer le deck de base du donjon
     void LoadDonjonDeck()
@@ -78,7 +86,6 @@ public class GameController : MonoBehaviour {
         XmlNodeList list = _xmlDoc.DocumentElement.SelectNodes("/decks/deck");
         foreach (XmlNode node in list)
         {
-            Debug.Log(node.Attributes["name"].Value);
             if(node.Attributes["name"].Value == "Base")
             {
                 XmlNodeList cards = node.ChildNodes;
@@ -86,22 +93,21 @@ public class GameController : MonoBehaviour {
                 {
 
                     int number = int.Parse(card.Attributes["nombre"].Value);
-                    Debug.Log(number);
                     for (int i = 0; i< number; i++)
                     {
-                        GameObject cardPrefab = Instantiate(_bdm._cardModel);
+                        GameObject cardPrefab = Instantiate(_ddm._cardModel);
                         PlayableCard datas = cardPrefab.GetComponent<PlayableCard>();
                         datas._name = card.Attributes["name"].Value;
                         datas._battleValue = int.Parse(card.Attributes["resistance"].Value);
                         datas._discardPrice = int.Parse(card.Attributes["defausse"].Value);
                         datas._effet = int.Parse(card.Attributes["effet"].Value);
-                        _bdm._donjonDeck.Add(cardPrefab);
+                        _ddm._donjonDeck.Add(cardPrefab);
                     }
 
                 }
             }
         }
-        _bdm.ShuffleDeck(_bdm._donjonDeck);
+        _ddm.ShuffleDeck(_ddm._donjonDeck);
 
     }
 
@@ -199,5 +205,30 @@ public class GameController : MonoBehaviour {
     {
         ChooseGoodAventurierBattleValue();
         _aventurierBattleValueText.text = "" + _aventurierBattleValue;
+    }
+
+    public void DoBattleResolution()
+    {
+        if (_donjonBattleValue >= _aventurierBattleValue)
+        {
+            GameTurnManager.ChangeState(GameState.Victoire);
+            foreach(GameObject gO in _pcm._playedCardlist)
+            {
+                _ddm._donjonDefausseDeck.Add(gO);
+                gO.transform.SetParent(this.transform.parent);
+                gO.transform.position = new Vector3(-100, -100, 0);
+            }
+            _pcm._playedCardlist.Clear();
+
+            _ddm._donjonDefausseDeck.Add(_cam._choosenOne);
+            _cam._choosenOne.transform.SetParent(this.transform.parent);
+            _cam._choosenOne.transform.position = new Vector3(-100, -100, 0);
+            _cam._choosenOne = null;
+
+        }
+        else if (_donjonBattleValue < _aventurierBattleValue)
+        {
+            GameTurnManager.ChangeState(GameState.Defaite);
+        }
     }
 }

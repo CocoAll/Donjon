@@ -27,22 +27,26 @@ public class AventurierCard : MonoBehaviour {
     //Lorsque deux cartes sont présenté au joueur
     public void ChooseCard()
     {
-        if (this.transform.parent == _aventurierCardSpot.transform && _selectedAventurierCardSpot.GetComponent<ChoosenAventurier>()._choosenOne == null)
+        if (GameTurnManager._actualGameState == GameState.ChoisirAventurier)
         {
-            foreach (GameObject gO in _aventurierCardSpot.GetComponent<PlayedCard>()._playedCardlist)
+
+            if (this.transform.parent == _aventurierCardSpot.transform && _selectedAventurierCardSpot.GetComponent<ChoosenAventurier>()._choosenOne == null)
             {
-                if(gO != this.gameObject)
+                foreach (GameObject gO in _aventurierCardSpot.GetComponent<PlayedCard>()._playedCardlist)
                 {
-                    _ddm._aventurierDefausseDeck.Add(gO);
-                    gO.transform.SetParent(null);
+                    if(gO != this.gameObject)
+                    {
+                        _ddm._aventurierDefausseDeck.Add(gO);
+                        gO.transform.SetParent(null);
+
+                    }
 
                 }
-
+                _selectedAventurierCardSpot.GetComponent<ChoosenAventurier>()._choosenOne = this.gameObject;
+                this.transform.SetParent(_selectedAventurierCardSpot.transform);
+                _aventurierCardSpot.GetComponent<PlayedCard>()._playedCardlist.Clear();
+                GameTurnManager.ChangeState(GameState.PreparerDonjon);
             }
-            _selectedAventurierCardSpot.GetComponent<ChoosenAventurier>()._choosenOne = this.gameObject;
-            this.transform.SetParent(_selectedAventurierCardSpot.transform);
-            _aventurierCardSpot.GetComponent<PlayedCard>()._playedCardlist.Clear();
-            GameTurnManager.ChangeState(GameState.PreparerDonjon);
         }
 
     }

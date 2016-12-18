@@ -24,9 +24,16 @@ public class PlayableCard : MonoBehaviour {
         return _discardPrice;
     }
 
-    public void UseEffet()
+    public void ClickResolution()
     {
-        if(_effet > 0)
+        if(GameTurnManager._actualGameState == GameState.PreparerDonjon)
+        {
+          if(_effet > 0)
+          {
+    
+          }
+        }
+        else if(GameTurnManager._actualGameState == GameState.Defaite)
         {
 
         }

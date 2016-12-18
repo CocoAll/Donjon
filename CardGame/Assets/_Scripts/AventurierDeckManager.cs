@@ -46,36 +46,39 @@ public class AventurierDeckManager : MonoBehaviour {
     //Fonction pour piocher les cartes 
     public void DrawCard()
     {
-        if (_aventurierDeck.Count > 1 && _pcm._playedCardlist.Count == 0 && _acsm._choosenOne == null)
+        if (GameTurnManager._actualGameState == GameState.ChoisirAventurier)
         {
-            _pcm._playedCardlist.Add(_aventurierDeck[_aventurierDeck.Count - 1]);
-            _aventurierDeck.Remove(_aventurierDeck[_aventurierDeck.Count - 1]);
-            _pcm._playedCardlist[_pcm._playedCardlist.Count - 1].transform.SetParent(_aventurierCardSpot.transform);
-            _pcm._playedCardlist[_pcm._playedCardlist.Count - 1].transform.localScale = new Vector3(1, 1, 1);
+            if (_aventurierDeck.Count > 1 && _pcm._playedCardlist.Count == 0 && _acsm._choosenOne == null)
+            {
+                _pcm._playedCardlist.Add(_aventurierDeck[_aventurierDeck.Count - 1]);
+                _aventurierDeck.Remove(_aventurierDeck[_aventurierDeck.Count - 1]);
+                _pcm._playedCardlist[_pcm._playedCardlist.Count - 1].transform.SetParent(_aventurierCardSpot.transform);
+                _pcm._playedCardlist[_pcm._playedCardlist.Count - 1].transform.localScale = new Vector3(1, 1, 1);
 
-            _pcm._playedCardlist.Add(_aventurierDeck[_aventurierDeck.Count - 1]);
-            _aventurierDeck.Remove(_aventurierDeck[_aventurierDeck.Count - 1]);
-            _pcm._playedCardlist[_pcm._playedCardlist.Count - 1].transform.SetParent(_aventurierCardSpot.transform);
-            _pcm._playedCardlist[_pcm._playedCardlist.Count - 1].transform.localScale = new Vector3(1, 1, 1);
-        }
-        else if(_aventurierDeck.Count == 1 && _pcm._playedCardlist.Count == 0 && _acsm._choosenOne == null)
-        {
-            _pcm._playedCardlist.Add(_aventurierDeck[_aventurierDeck.Count - 1]);
-            _aventurierDeck.Remove(_aventurierDeck[_aventurierDeck.Count - 1]);
-            _pcm._playedCardlist[_pcm._playedCardlist.Count - 1].transform.SetParent(_aventurierCardSpot.transform);
-            _pcm._playedCardlist[_pcm._playedCardlist.Count - 1].transform.localScale = new Vector3(1, 1, 1);
+                _pcm._playedCardlist.Add(_aventurierDeck[_aventurierDeck.Count - 1]);
+                _aventurierDeck.Remove(_aventurierDeck[_aventurierDeck.Count - 1]);
+                _pcm._playedCardlist[_pcm._playedCardlist.Count - 1].transform.SetParent(_aventurierCardSpot.transform);
+                _pcm._playedCardlist[_pcm._playedCardlist.Count - 1].transform.localScale = new Vector3(1, 1, 1);
+            }
+            else if (_aventurierDeck.Count == 1 && _pcm._playedCardlist.Count == 0 && _acsm._choosenOne == null)
+            {
+                _pcm._playedCardlist.Add(_aventurierDeck[_aventurierDeck.Count - 1]);
+                _aventurierDeck.Remove(_aventurierDeck[_aventurierDeck.Count - 1]);
+                _pcm._playedCardlist[_pcm._playedCardlist.Count - 1].transform.SetParent(_aventurierCardSpot.transform);
+                _pcm._playedCardlist[_pcm._playedCardlist.Count - 1].transform.localScale = new Vector3(1, 1, 1);
 
-            //TODO
-            //Re-melanger Defausse, incrémenter/vérifier état de la partie : Fin ? ou juste plus dur après.
-            //Question de règle : niveau augmenterce tour ci ou le suivant ??????????????????????????????????????????????????
+                //TODO
+                //Re-melanger Defausse, incrémenter/vérifier état de la partie : Fin ? ou juste plus dur après.
+                //Question de règle : niveau augmenterce tour ci ou le suivant ??????????????????????????????????????????????????
 
+            }
+            else if (_aventurierDeck.Count == 0 && _pcm._playedCardlist.Count == 0 && _acsm._choosenOne == null)
+            {
+                //TODO
+                //Re-melanger Defausse, incrémenter/vérifier état de la partie : Fin ? ou juste plus dur après.
+            }
+            UpdateText();
         }
-        else if (_aventurierDeck.Count == 0 && _pcm._playedCardlist.Count == 0 && _acsm._choosenOne == null)
-        {
-            //TODO
-            //Re-melanger Defausse, incrémenter/vérifier état de la partie : Fin ? ou juste plus dur après.
-        }
-        UpdateText();
     }
 
     private void UpdateText()
