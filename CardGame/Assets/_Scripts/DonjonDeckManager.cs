@@ -26,7 +26,6 @@ public class DonjonDeckManager : MonoBehaviour {
         UpdateText();
     }
 
-
     //Fonction pour melanger de façon aléatoire un deck
     public void ShuffleDeck(List<GameObject> array)
     {
@@ -40,6 +39,8 @@ public class DonjonDeckManager : MonoBehaviour {
         UpdateText();
     }
 
+    //Permet de piocher une carte du 
+    //deck donjon
    public void DrawCard()
     {
         if (_gcm.CanDrawDonjonCard() == true)
@@ -63,6 +64,8 @@ public class DonjonDeckManager : MonoBehaviour {
         }
     }
 
+    //Fonction mettant a jour les textes
+    //pour les valeurs de combats
     private void UpdateText()
     {
         _nbCardText.text = "" + _donjonDeck.Count;

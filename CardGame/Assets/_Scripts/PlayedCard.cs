@@ -9,9 +9,5 @@ public class PlayedCard : MonoBehaviour {
 	void Start () {
         _playedCardlist = new List<GameObject>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 }

@@ -201,12 +201,14 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    //
     public void UpdateAventurierCombatValue()
     {
         ChooseGoodAventurierBattleValue();
         _aventurierBattleValueText.text = "" + _aventurierBattleValue;
     }
 
+    //
     public void DoBattleResolution()
     {
         if (_donjonBattleValue >= _aventurierBattleValue)
