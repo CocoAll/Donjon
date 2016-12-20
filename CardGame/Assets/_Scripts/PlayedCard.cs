@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class PlayedCard : MonoBehaviour {
 
-    public List<GameObject> _playedCardlist = null;
+    public static List<GameObject> _playedCardlist = null;
 
 	// Use this for initialization
 	void Start () {

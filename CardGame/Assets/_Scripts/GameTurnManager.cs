@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public enum GameState
@@ -11,124 +12,33 @@ public enum GameState
     Defaite = 5,
     FinDeTour = 6,
     CombatCritique1 = 7,
-    CombatCritique2 = 8
+    CombatCritique2 = 8,
+    PartieGagné = 9,
+    PartiePerdu = 10
 }
 //C'est la classe qui gère les tours de jeu, et les actions possibles par le joueur
 public class GameTurnManager : MonoBehaviour {
 
-
-
-
     //Etat du tour de jeu actuel
     public static GameState _actualGameState = 0;
-
-    //Actions possibles par le Joueur
-    public static bool _canDrawDonjonCard = false;
-    public static bool _canDrawAventurierCard = false;
-    public static bool _canResolveBattle = false;
-    public static bool _canChooseAventurierCard = false;
-    public static bool _canAtivateEffectOfDonjonCard = false;
-    public static bool _canSellDonjonCard = false;
+    public Text _gameStateText = null;
 
     void Start () {
         ChangeState(GameState.ChoisirAventurier) ;
-	}
+        _gameStateText.text = "" +_actualGameState;
+    }
+
+    void Update()
+    {
+        if(_gameStateText.text != "" + _actualGameState)
+        {
+            _gameStateText.text = "" + _actualGameState;
+        }
+    }
 
     //Fonction qui permet de changer d'état le jeu, puis et gérer les actions possibles du joueur
     public static void ChangeState(GameState gs)
     {
         _actualGameState = gs;
-        switch (_actualGameState)
-        {
-            default:
-                Debug.Log("Cas non gérer");
-                break;
-            case GameState.ChoisirAventurier:
-                SetChoisirAventurier();
-                break;
-            case GameState.PreparerDonjon:
-                SetPreparerDonjon();
-                break;
-            case GameState.Combattre:
-                SetCombattre();
-                break;
-            case GameState.Victoire:
-                SetVictoire();
-                break;
-            case GameState.Defaite:
-                SetDefaite();
-                break;
-            case GameState.FinDeTour:
-                SetFinDeTour();
-                break;
-            case GameState.CombatCritique1:
-                break;
-            case GameState.CombatCritique2:
-                break;
-        }
-    }
-
-    //*********************************************************************************//
-    //Fonctions qui gèrent les booleens 
-    //*********************************************************************************//
-
-    private static void SetChoisirAventurier()
-    {
-        _canDrawDonjonCard = false;
-        _canDrawAventurierCard = true;
-        _canResolveBattle = false;
-        _canChooseAventurierCard = true;
-        _canAtivateEffectOfDonjonCard = false;
-        _canSellDonjonCard = false;
-    }
-
-    private static void SetPreparerDonjon()
-    {
-        _canDrawDonjonCard = true;
-        _canDrawAventurierCard = false;
-        _canResolveBattle = true;
-        _canChooseAventurierCard = false;
-        _canAtivateEffectOfDonjonCard = true;
-        _canSellDonjonCard = false;
-    }
-
-    private static void SetCombattre()
-    {
-        _canDrawDonjonCard = false;
-        _canDrawAventurierCard = false;
-        _canResolveBattle = false;
-        _canChooseAventurierCard = false;
-        _canAtivateEffectOfDonjonCard = false;
-        _canSellDonjonCard = false;
-    }
-
-    private static void SetVictoire()
-    {
-        _canDrawDonjonCard = false;
-        _canDrawAventurierCard = false;
-        _canResolveBattle = false;
-        _canChooseAventurierCard = false;
-        _canAtivateEffectOfDonjonCard = false;
-        _canSellDonjonCard = false;
-    }
-
-    private static void SetDefaite()
-    {
-        _canDrawDonjonCard = false;
-        _canDrawAventurierCard = false;
-        _canResolveBattle = false;
-        _canChooseAventurierCard = false;
-        _canAtivateEffectOfDonjonCard = false;
-        _canSellDonjonCard = true;
-    }
-
-    private static void SetFinDeTour()
-    {
-        _canDrawDonjonCard = false;
-        _canDrawAventurierCard = false;
-        _canResolveBattle = false;
-        _canChooseAventurierCard = false;
-        _canAtivateEffectOfDonjonCard = false;
-        _canSellDonjonCard = false;
     }
 }

@@ -7,11 +7,10 @@ public class DonjonDeckManager : MonoBehaviour {
 
 
     public GameObject _cardModel = null;
-    public List<GameObject> _donjonDeck = null;
-    public List<GameObject> _donjonDefausseDeck = null;
+    public static List<GameObject> _donjonDeck = null;
+    public static List<GameObject> _donjonDefausseDeck = null;
     [SerializeField]
     private GameObject _donjonCardSpot = null;
-    private PlayedCard _dcm = null;
     [SerializeField]
     private Text _nbCardText = null;
     [SerializeField]
@@ -22,7 +21,6 @@ public class DonjonDeckManager : MonoBehaviour {
 	void Start () {
         _donjonDefausseDeck = new List<GameObject>();
         _donjonDeck = new List<GameObject>();
-        _dcm = _donjonCardSpot.GetComponent<PlayedCard>();
         UpdateText();
     }
 
@@ -48,15 +46,18 @@ public class DonjonDeckManager : MonoBehaviour {
             _gcm._drawnDonjonCard++;
             if (_donjonDeck.Count > 0)
             {
-                _dcm._playedCardlist.Add(_donjonDeck[_donjonDeck.Count - 1]);
+                PlayedCard._playedCardlist.Add(_donjonDeck[_donjonDeck.Count - 1]);
                 _donjonDeck.Remove(_donjonDeck[_donjonDeck.Count - 1]);
-                _dcm._playedCardlist[_dcm._playedCardlist.Count - 1].transform.SetParent(_donjonCardSpot.transform);
-                _dcm._playedCardlist[_dcm._playedCardlist.Count - 1].transform.localScale = new Vector3(1, 1, 1);
+                PlayedCard._playedCardlist[PlayedCard._playedCardlist.Count - 1].transform.SetParent(_donjonCardSpot.transform);
+                PlayedCard._playedCardlist[PlayedCard._playedCardlist.Count - 1].transform.localScale = new Vector3(1, 1, 1);
             }
             else if (_donjonDeck.Count == 0)
             {
-                //TODO
-                //Melanger défausse, ajouter carte usure puis piocher
+                ResetDeck();
+                PlayedCard._playedCardlist.Add(_donjonDeck[_donjonDeck.Count - 1]);
+                _donjonDeck.Remove(_donjonDeck[_donjonDeck.Count - 1]);
+                PlayedCard._playedCardlist[PlayedCard._playedCardlist.Count - 1].transform.SetParent(_donjonCardSpot.transform);
+                PlayedCard._playedCardlist[PlayedCard._playedCardlist.Count - 1].transform.localScale = new Vector3(1, 1, 1);
             }
 
             _gcm.HasDraw();
@@ -71,4 +72,10 @@ public class DonjonDeckManager : MonoBehaviour {
         _nbCardText.text = "" + _donjonDeck.Count;
     }
 
+    public void ResetDeck()
+    {
+        _donjonDeck = _donjonDefausseDeck;
+        _donjonDefausseDeck = new List<GameObject>();
+        ShuffleDeck(_donjonDeck);
+    }
 }

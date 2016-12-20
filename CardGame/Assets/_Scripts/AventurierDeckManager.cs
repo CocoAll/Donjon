@@ -5,13 +5,12 @@ using System.Collections.Generic;
 public class AventurierDeckManager : MonoBehaviour {
 
     public GameObject _cardModel = null;
-    public List<GameObject> _aventurierDeck = null;
-    public List<GameObject> _aventurierDefausseDeck = null;
+    public static List<GameObject> _aventurierDeck = null;
+    public static List<GameObject> _aventurierDefausseDeck = null;
 
     public GameObject _selectedAventurierCardSpot = null;
     public GameObject _aventurierCardSpot = null;
     private ChoosenAventurier _acsm = null;
-    private PlayedCard _pcm = null;
     [SerializeField]
     private Text _nbCardText = null;
 
@@ -19,7 +18,6 @@ public class AventurierDeckManager : MonoBehaviour {
     void Start () {
         _aventurierDeck = new List<GameObject>();
         _aventurierDefausseDeck = new List<GameObject>();
-        _pcm = _aventurierCardSpot.GetComponent<PlayedCard>();
         _acsm = _selectedAventurierCardSpot.GetComponent<ChoosenAventurier>();
         UpdateText();
     }
@@ -42,40 +40,48 @@ public class AventurierDeckManager : MonoBehaviour {
         UpdateText();
     }
 
+    //Permet de reprendre la défause, de la melanger et de rejouer avec.
+    public void ResetDeck()
+    {
+        _aventurierDeck = _aventurierDefausseDeck;
+        _aventurierDefausseDeck = new List<GameObject>();
+        ShuffleDeck(_aventurierDeck);
+    }
 
     //Fonction pour piocher les cartes 
     public void DrawCard()
     {
         if (GameTurnManager._actualGameState == GameState.ChoisirAventurier)
         {
-            if (_aventurierDeck.Count > 1 && _pcm._playedCardlist.Count == 0 && _acsm._choosenOne == null)
+            if (_aventurierDeck.Count > 1 && PlayedCard._playedCardlist.Count == 0 && _acsm._choosenOne == null)
             {
-                _pcm._playedCardlist.Add(_aventurierDeck[_aventurierDeck.Count - 1]);
+                PlayedCard._playedCardlist.Add(_aventurierDeck[_aventurierDeck.Count - 1]);
                 _aventurierDeck.Remove(_aventurierDeck[_aventurierDeck.Count - 1]);
-                _pcm._playedCardlist[_pcm._playedCardlist.Count - 1].transform.SetParent(_aventurierCardSpot.transform);
-                _pcm._playedCardlist[_pcm._playedCardlist.Count - 1].transform.localScale = new Vector3(1, 1, 1);
+                PlayedCard._playedCardlist[PlayedCard._playedCardlist.Count - 1].transform.SetParent(_aventurierCardSpot.transform);
+                PlayedCard._playedCardlist[PlayedCard._playedCardlist.Count - 1].transform.localScale = new Vector3(1, 1, 1);
 
-                _pcm._playedCardlist.Add(_aventurierDeck[_aventurierDeck.Count - 1]);
+                PlayedCard._playedCardlist.Add(_aventurierDeck[_aventurierDeck.Count - 1]);
                 _aventurierDeck.Remove(_aventurierDeck[_aventurierDeck.Count - 1]);
-                _pcm._playedCardlist[_pcm._playedCardlist.Count - 1].transform.SetParent(_aventurierCardSpot.transform);
-                _pcm._playedCardlist[_pcm._playedCardlist.Count - 1].transform.localScale = new Vector3(1, 1, 1);
+                PlayedCard._playedCardlist[PlayedCard._playedCardlist.Count - 1].transform.SetParent(_aventurierCardSpot.transform);
+                PlayedCard._playedCardlist[PlayedCard._playedCardlist.Count - 1].transform.localScale = new Vector3(1, 1, 1);
             }
-            else if (_aventurierDeck.Count == 1 && _pcm._playedCardlist.Count == 0 && _acsm._choosenOne == null)
+            else if (_aventurierDeck.Count == 1 && PlayedCard._playedCardlist.Count == 0 && _acsm._choosenOne == null)
             {
-                _pcm._playedCardlist.Add(_aventurierDeck[_aventurierDeck.Count - 1]);
+                PlayedCard._playedCardlist.Add(_aventurierDeck[_aventurierDeck.Count - 1]);
                 _aventurierDeck.Remove(_aventurierDeck[_aventurierDeck.Count - 1]);
-                _pcm._playedCardlist[_pcm._playedCardlist.Count - 1].transform.SetParent(_aventurierCardSpot.transform);
-                _pcm._playedCardlist[_pcm._playedCardlist.Count - 1].transform.localScale = new Vector3(1, 1, 1);
+                PlayedCard._playedCardlist[PlayedCard._playedCardlist.Count - 1].transform.SetParent(_aventurierCardSpot.transform);
+                PlayedCard._playedCardlist[PlayedCard._playedCardlist.Count - 1].transform.localScale = new Vector3(1, 1, 1);
 
                 //TODO
                 //Re-melanger Defausse, incrémenter/vérifier état de la partie : Fin ? ou juste plus dur après.
                 //Question de règle : niveau augmenterce tour ci ou le suivant ??????????????????????????????????????????????????
 
             }
-            else if (_aventurierDeck.Count == 0 && _pcm._playedCardlist.Count == 0 && _acsm._choosenOne == null)
+            else if (_aventurierDeck.Count == 0 && PlayedCard._playedCardlist.Count == 0 && _acsm._choosenOne == null)
             {
                 //TODO
                 //Re-melanger Defausse, incrémenter/vérifier état de la partie : Fin ? ou juste plus dur après.
+                //Done dans gamecontroller ( a check quad meme)
             }
             UpdateText();
         }

@@ -11,17 +11,12 @@ public class PlayableCard : MonoBehaviour {
 
     public int _effet = 0;
 
-    //***************************************************************************//
-    //Accesseurs//
-    //***************************************************************************//
-    public int GetBattleValue()
-    {
-        return _battleValue;
-    }
+    public bool _canBeDoubleClick = false;
+    public bool _hasBeenDoubleClick = false;
 
-    public int GetDiscardPrice()
+    void Update()
     {
-        return _discardPrice;
+
     }
 
     public void ClickResolution()
@@ -35,7 +30,34 @@ public class PlayableCard : MonoBehaviour {
         }
         else if(GameTurnManager._actualGameState == GameState.Defaite)
         {
+            if (_canBeDoubleClick == false)
+            {
+                foreach (GameObject gO in PlayedCard._playedCardlist)
+                {
+                    gO.GetComponent<PlayableCard>()._canBeDoubleClick = false;
+                }
+                _canBeDoubleClick = true;
+            }
+            else
+            {
+                //Faut exiler la cartes !!!
+            }
 
         }
     }
+
+
+    //***************************************************************************//
+    //Accesseurs//
+    //***************************************************************************//
+    public int GetBattleValue()
+    {
+        return _battleValue;
+    }
+
+    public int GetDiscardPrice()
+    {
+        return _discardPrice;
+    }
+
 }

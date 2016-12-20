@@ -32,11 +32,11 @@ public class AventurierCard : MonoBehaviour {
 
             if (this.transform.parent == _aventurierCardSpot.transform && _selectedAventurierCardSpot.GetComponent<ChoosenAventurier>()._choosenOne == null)
             {
-                foreach (GameObject gO in _aventurierCardSpot.GetComponent<PlayedCard>()._playedCardlist)
+                foreach (GameObject gO in PlayedCard._playedCardlist)
                 {
                     if(gO != this.gameObject)
                     {
-                        _ddm._aventurierDefausseDeck.Add(gO);
+                        AventurierDeckManager._aventurierDefausseDeck.Add(gO);
                         gO.transform.SetParent(null);
 
                     }
@@ -44,7 +44,7 @@ public class AventurierCard : MonoBehaviour {
                 }
                 _selectedAventurierCardSpot.GetComponent<ChoosenAventurier>()._choosenOne = this.gameObject;
                 this.transform.SetParent(_selectedAventurierCardSpot.transform);
-                _aventurierCardSpot.GetComponent<PlayedCard>()._playedCardlist.Clear();
+                PlayedCard._playedCardlist.Clear();
                 GameTurnManager.ChangeState(GameState.PreparerDonjon);
             }
         }

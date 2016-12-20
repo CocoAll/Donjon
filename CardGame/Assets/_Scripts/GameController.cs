@@ -46,6 +46,9 @@ public class GameController : MonoBehaviour {
     public int _aventurierBattleValue = 0;
     public int _donjonBattleValue = 0;
 
+    public bool _hasKillCritique1 = false;
+    public bool _hasKillCritique2 = false;
+
     void Start ()
     {
         _ddm = _donjonDeckObject.GetComponent<DonjonDeckManager>();
@@ -73,9 +76,15 @@ public class GameController : MonoBehaviour {
 
     void Update()
     {
-        if(GameTurnManager._canDrawDonjonCard == true)
+        if(GameTurnManager._actualGameState == GameState.PreparerDonjon)
         {
             UpdateAventurierCombatValue();
+        }
+
+        if(_notorietePoints == 0)
+        {
+            GameTurnManager.ChangeState(GameState.PartiePerdu);
+            GameOver();
         }
     }
 
@@ -101,13 +110,13 @@ public class GameController : MonoBehaviour {
                         datas._battleValue = int.Parse(card.Attributes["resistance"].Value);
                         datas._discardPrice = int.Parse(card.Attributes["defausse"].Value);
                         datas._effet = int.Parse(card.Attributes["effet"].Value);
-                        _ddm._donjonDeck.Add(cardPrefab);
+                        DonjonDeckManager._donjonDeck.Add(cardPrefab);
                     }
 
                 }
             }
         }
-        _ddm.ShuffleDeck(_ddm._donjonDeck);
+        _ddm.ShuffleDeck(DonjonDeckManager._donjonDeck);
 
     }
 
@@ -118,7 +127,6 @@ public class GameController : MonoBehaviour {
         XmlNodeList list = _xmlDoc.DocumentElement.SelectNodes("/decks/deck");
         foreach (XmlNode node in list)
         {
-            Debug.Log(node.Attributes["name"].Value);
             if (node.Attributes["name"].Value == "Confrontation")
             {
                 XmlNodeList cards = node.ChildNodes;
@@ -138,13 +146,13 @@ public class GameController : MonoBehaviour {
                     datas2._maxFreeCards = int.Parse(card.Attributes["pioche"].Value);
                     datas2._aventurierCardSpot = _ccm._aventurierCardSpot;
                     datas2._selectedAventurierCardSpot = _ccm._selectedAventurierCardSpot;
-                    _ccm._aventurierDeck.Add(cardPrefab);
+                    AventurierDeckManager._aventurierDeck.Add(cardPrefab);
                     datas2._ddm = this._ccm;
                 }
 
             }
         }
-        _ccm.ShuffleDeck(_ccm._aventurierDeck);
+        _ccm.ShuffleDeck(AventurierDeckManager._aventurierDeck);
     }
 
     //Permet de vérifier si le joueur peux piocher gratuitement
@@ -155,7 +163,7 @@ public class GameController : MonoBehaviour {
         {
             return canDraw;
         }
-        if (_drawnDonjonCard < _cam._choosenOne.GetComponent<AventurierCard>()._maxFreeCards && GameTurnManager._canDrawDonjonCard == true)
+        if (_drawnDonjonCard < _cam._choosenOne.GetComponent<AventurierCard>()._maxFreeCards && GameTurnManager._actualGameState == GameState.PreparerDonjon)
         {
             canDraw = true;
         }
@@ -174,7 +182,7 @@ public class GameController : MonoBehaviour {
     public void UpdateDonjonCombatValue()
     {
         int donjonValue = 0;
-        foreach (GameObject gO in _pcm._playedCardlist)
+        foreach (GameObject gO in PlayedCard._playedCardlist)
         {
             donjonValue += gO.GetComponent<PlayableCard>()._battleValue;
         }
@@ -201,36 +209,99 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    //
+    //Permettre de mettre a jour la valeur de combat de l'aventurier
     public void UpdateAventurierCombatValue()
     {
         ChooseGoodAventurierBattleValue();
         _aventurierBattleValueText.text = "" + _aventurierBattleValue;
     }
 
-    //
+    //Fonction permettant de resoudre le combat et de décider 
+    //ce que le joueur peut faire ensuite
     public void DoBattleResolution()
     {
-        if (_donjonBattleValue >= _aventurierBattleValue)
-        {
-            GameTurnManager.ChangeState(GameState.Victoire);
-            foreach(GameObject gO in _pcm._playedCardlist)
+        if (GameTurnManager._actualGameState == GameState.PreparerDonjon && _drawnDonjonCard > 0 ) {
+            if (_donjonBattleValue >= _aventurierBattleValue)
             {
-                _ddm._donjonDefausseDeck.Add(gO);
-                gO.transform.SetParent(this.transform.parent);
-                gO.transform.position = new Vector3(-100, -100, 0);
+                GameTurnManager.ChangeState(GameState.Victoire);
+                foreach (GameObject gO in PlayedCard._playedCardlist)
+                {
+                    DonjonDeckManager._donjonDefausseDeck.Add(gO);
+                    gO.transform.SetParent(this.transform.parent);
+                    gO.transform.position = new Vector3(-100, -100, 0);
+                }
+                PlayedCard._playedCardlist.Clear();
+
+                DonjonDeckManager._donjonDefausseDeck.Add(_cam._choosenOne);
+                _cam._choosenOne.transform.SetParent(this.transform.parent);
+                _cam._choosenOne.transform.position = new Vector3(-100, -100, 0);
+                _cam._choosenOne = null;
+
             }
-            _pcm._playedCardlist.Clear();
-
-            _ddm._donjonDefausseDeck.Add(_cam._choosenOne);
-            _cam._choosenOne.transform.SetParent(this.transform.parent);
-            _cam._choosenOne.transform.position = new Vector3(-100, -100, 0);
-            _cam._choosenOne = null;
-
+            else if (_donjonBattleValue < _aventurierBattleValue)
+            {
+                GameTurnManager.ChangeState(GameState.Defaite);
+            }
         }
-        else if (_donjonBattleValue < _aventurierBattleValue)
-        {
-            GameTurnManager.ChangeState(GameState.Defaite);
+    }
+
+    //Fonction qui gère la fin de tour 
+    //Et comment doit se dérouler la suite.
+    public void EndOfTurn()
+    {
+        if (GameTurnManager._actualGameState == GameState.Defaite || GameTurnManager._actualGameState == GameState.Victoire) {
+            //Vide le terrain si une défaite a été subit
+            if (GameTurnManager._actualGameState == GameState.Defaite)
+            {
+                foreach (GameObject gO in PlayedCard._playedCardlist)
+                {
+                    DonjonDeckManager._donjonDefausseDeck.Add(gO);
+                    gO.transform.SetParent(this.transform.parent);
+                    gO.transform.position = new Vector3(-100, -100, 0);
+                }
+                PlayedCard._playedCardlist.Clear();
+
+                AventurierDeckManager._aventurierDefausseDeck.Add(_cam._choosenOne);
+                _cam._choosenOne.transform.SetParent(this.transform.parent);
+                _cam._choosenOne.transform.position = new Vector3(-100, -100, 0);
+                _cam._choosenOne = null;
+            }
+
+            GameTurnManager.ChangeState(GameState.FinDeTour);
+
+            //Verifie si le deck des aventurier est vide
+            if (AventurierDeckManager._aventurierDeck.Count == 0)
+            {
+                //Si aventurier niveau 3 terminé, on passe aux combat de boss finaux
+                if (_aventurierLevel == _aventurierMaxLevel)
+                {
+                    //Combat 1er Boss, et si deja fait alors 2e
+                    if (_hasKillCritique1 == false)
+                    {
+                        GameTurnManager.ChangeState(GameState.CombatCritique1);
+                    }
+                    else if (_hasKillCritique2 == false)
+                    {
+                        GameTurnManager.ChangeState(GameState.CombatCritique2);
+                    }
+                }
+                else if (_aventurierLevel < _aventurierMaxLevel)
+                {
+                    _aventurierLevel++;
+                    _aventurierLevelText.text = "" + _aventurierLevel;
+                    _ccm.ResetDeck();
+                    GameTurnManager.ChangeState(GameState.ChoisirAventurier);
+                }
+            } else if (AventurierDeckManager._aventurierDeck.Count != 0)
+            {
+                _drawnDonjonCard = 0;
+                GameTurnManager.ChangeState(GameState.ChoisirAventurier);
+            }
         }
+    }
+
+    public void GameOver()
+    {
+
     }
 }
