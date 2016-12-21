@@ -10,9 +10,8 @@ public class GameController : MonoBehaviour {
 
     private int _aventurierLevel = 1;
     private int _aventurierMaxLevel = 3;
-    private int _notorietePoints = 20;
-    [SerializeField]
-    private Text _notorietePointText = null;
+    public int _notorietePoints = 20;
+    public Text _notorietePointText = null;
     [SerializeField]
     private Text _aventurierLevelText = null;
 
@@ -81,7 +80,7 @@ public class GameController : MonoBehaviour {
             UpdateAventurierCombatValue();
         }
 
-        if(_notorietePoints == 0)
+        if(_notorietePoints <= 0)
         {
             GameTurnManager.ChangeState(GameState.PartiePerdu);
             GameOver();
@@ -249,6 +248,7 @@ public class GameController : MonoBehaviour {
     //Et comment doit se dérouler la suite.
     public void EndOfTurn()
     {
+        //On verifie si l'etat permet de mettre fin au tour
         if (GameTurnManager._actualGameState == GameState.Defaite || GameTurnManager._actualGameState == GameState.Victoire) {
             //Vide le terrain si une défaite a été subit
             if (GameTurnManager._actualGameState == GameState.Defaite)

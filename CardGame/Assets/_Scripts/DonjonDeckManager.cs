@@ -9,6 +9,7 @@ public class DonjonDeckManager : MonoBehaviour {
     public GameObject _cardModel = null;
     public static List<GameObject> _donjonDeck = null;
     public static List<GameObject> _donjonDefausseDeck = null;
+    public static List<GameObject> _donjonExileDeck = null;
     [SerializeField]
     private GameObject _donjonCardSpot = null;
     [SerializeField]
@@ -21,6 +22,7 @@ public class DonjonDeckManager : MonoBehaviour {
 	void Start () {
         _donjonDefausseDeck = new List<GameObject>();
         _donjonDeck = new List<GameObject>();
+        _donjonExileDeck = new List<GameObject>();
         UpdateText();
     }
 

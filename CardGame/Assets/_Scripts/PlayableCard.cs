@@ -14,6 +14,13 @@ public class PlayableCard : MonoBehaviour {
     public bool _canBeDoubleClick = false;
     public bool _hasBeenDoubleClick = false;
 
+    public GameController _gcm = null;
+
+    void Start()
+    {
+        _gcm = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+    }
+
     void Update()
     {
 
@@ -40,7 +47,11 @@ public class PlayableCard : MonoBehaviour {
             }
             else
             {
-                //Faut exiler la cartes !!!
+                DonjonDeckManager._donjonExileDeck.Add(this.gameObject);
+                this.transform.SetParent(this.transform.parent.parent);
+                this.transform.position = new Vector3(-100, -100, 0);
+                _gcm._notorietePoints = _gcm._notorietePoints - _discardPrice;
+                _gcm._notorietePointText.text = "" + _gcm._notorietePoints;
             }
 
         }
