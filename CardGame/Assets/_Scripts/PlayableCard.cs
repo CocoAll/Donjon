@@ -10,6 +10,7 @@ public class PlayableCard : MonoBehaviour {
     public int _discardPrice = 1;
 
     public int _effet = 0;
+    public bool _hasUseEffet = false;
 
     public bool _canBeDoubleClick = false;
     public bool _hasBeenDoubleClick = false;
@@ -30,10 +31,11 @@ public class PlayableCard : MonoBehaviour {
     {
         if(GameTurnManager._actualGameState == GameState.PreparerDonjon)
         {
-          if(_effet > 0)
-          {
-    
-          }
+            if(_hasUseEffet == false)
+            {
+                CardEffetResolution();
+            }
+
         }
         else if(GameTurnManager._actualGameState == GameState.Defaite)
         {
@@ -57,6 +59,20 @@ public class PlayableCard : MonoBehaviour {
         }
     }
 
+    public void CardEffetResolution()
+    {
+        switch (_effet)
+        {
+            default :
+                break;
+            case 1:
+                //ajouter deux PdV
+                _gcm._notorietePoints = _gcm._notorietePoints + 2;
+                _gcm._notorietePointText.text = "" + _gcm._notorietePoints;
+                break;
+        }
+        _hasUseEffet = true;
+    }
 
     //***************************************************************************//
     //Accesseurs//

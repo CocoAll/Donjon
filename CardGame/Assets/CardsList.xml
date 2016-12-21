@@ -3,9 +3,9 @@
 	<deck name="Base">
 		<card name="a" resistance="-1" effet="0" defausse="1" nombre="5"/>
 		<card name="b" resistance="0" effet="0" defausse="1" nombre="6"/>
-		<card name="c" resistance="0" effet="0" defausse="1" nombre="3"/>
-		<card name="d" resistance="0" effet="0" defausse="1" nombre="3"/>
-		<card name="e" resistance="0" effet="0" defausse="1" nombre="1"/>
+		<card name="c" resistance="0" effet="1" defausse="1" nombre="3"/>
+		<card name="d" resistance="1" effet="0" defausse="1" nombre="3"/>
+		<card name="e" resistance="2" effet="0" defausse="1" nombre="1"/>
 	</deck>
 	
 	<deck name="Confrontation">
