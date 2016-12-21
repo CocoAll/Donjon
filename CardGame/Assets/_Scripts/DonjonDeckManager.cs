@@ -79,5 +79,9 @@ public class DonjonDeckManager : MonoBehaviour {
         _donjonDeck = _donjonDefausseDeck;
         _donjonDefausseDeck = new List<GameObject>();
         ShuffleDeck(_donjonDeck);
+        foreach (GameObject gO in _donjonDeck)
+        {
+            gO.GetComponent<PlayableCard>()._hasUseEffet = false;
+        }
     }
 }
