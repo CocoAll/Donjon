@@ -43,7 +43,7 @@ public class ListeActionsTextManager : MonoBehaviour {
                 _actionsText.text = "-Finir le tour    -Regarder cartes défausses";
                 break;
             case GameState.Defaite:
-                _actionsText.text = "";
+                _actionsText.text = "-Vendre carte (Double click)   -Finir le tour   -Regarder cartes défausses";
                 break;
             case GameState.FinDeTour:
                 _actionsText.text = "";

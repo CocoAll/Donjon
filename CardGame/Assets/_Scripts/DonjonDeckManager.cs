@@ -55,6 +55,8 @@ public class DonjonDeckManager : MonoBehaviour {
             }
             else if (_donjonDeck.Count == 0)
             {
+                _donjonDefausseDeck.Add(UsureDeckManager._usureDeck[UsureDeckManager._usureDeck.Count - 1]);
+                UsureDeckManager._usureDeck.Remove(UsureDeckManager._usureDeck[UsureDeckManager._usureDeck.Count - 1]);
                 ResetDeck();
                 PlayedCard._playedCardlist.Add(_donjonDeck[_donjonDeck.Count - 1]);
                 _donjonDeck.Remove(_donjonDeck[_donjonDeck.Count - 1]);
@@ -74,6 +76,8 @@ public class DonjonDeckManager : MonoBehaviour {
         _nbCardText.text = "" + _donjonDeck.Count;
     }
 
+    //Fonction qui permet de remettre le deck defausse
+    //En deck jouable
     public void ResetDeck()
     {
         _donjonDeck = _donjonDefausseDeck;
@@ -82,6 +86,7 @@ public class DonjonDeckManager : MonoBehaviour {
         foreach (GameObject gO in _donjonDeck)
         {
             gO.GetComponent<PlayableCard>()._hasUseEffet = false;
+            gO.transform.rotation= Quaternion.Euler(0, 0, 0);
         }
     }
 }

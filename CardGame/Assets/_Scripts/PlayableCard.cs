@@ -34,6 +34,10 @@ public class PlayableCard : MonoBehaviour {
             if(_hasUseEffet == false)
             {
                 CardEffetResolution();
+                if(_effet != 0)
+                {
+                    this.transform.rotation = Quaternion.Euler(0,0,90);
+                }
             }
 
         }
@@ -59,16 +63,23 @@ public class PlayableCard : MonoBehaviour {
         }
     }
 
+    //Fonction permettant de gérer que faire en cas de click en fonction de l'état du tour
     public void CardEffetResolution()
     {
         switch (_effet)
         {
             default :
+                Debug.Log("Pas d'effet de carte");
                 break;
+            //Si le int effet est superieur a 0, alors on applique l'effet associé
             case 1:
                 //ajouter deux PdV
                 _gcm._notorietePoints = _gcm._notorietePoints + 2;
                 _gcm._notorietePointText.text = "" + _gcm._notorietePoints;
+                break;
+            case 2:
+                break;
+            case 3:
                 break;
         }
         _hasUseEffet = true;

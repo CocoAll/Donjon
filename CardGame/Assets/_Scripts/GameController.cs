@@ -24,6 +24,10 @@ public class GameController : MonoBehaviour {
     private AventurierDeckManager _ccm = null;
 
     [SerializeField]
+    private GameObject _usureDeckObject = null;
+    private UsureDeckManager _udm = null;
+
+    [SerializeField]
     private GameObject _playedCardObject = null;
     private PlayedCard _pcm = null;
 
@@ -54,6 +58,7 @@ public class GameController : MonoBehaviour {
         _ccm = _aventurierDeckObject.GetComponent<AventurierDeckManager>();
         _pcm = _playedCardObject.GetComponent<PlayedCard>();
         _cam = _choosenAventurierSpot.GetComponent<ChoosenAventurier>();
+        _udm = _usureDeckObject.GetComponent<UsureDeckManager>();
 
         _xmlPath = Application.dataPath + @"/CardsList.xml";
         _xmlDoc = new XmlDocument();
@@ -65,6 +70,7 @@ public class GameController : MonoBehaviour {
 
         LoadDonjonDeck();
         LoadAventurierDeck();
+        LoadUsureDeck();
 
         _notorietePointText.text = "" + _notorietePoints;
         _aventurierLevelText.text = "" + _aventurierLevel;
@@ -152,6 +158,31 @@ public class GameController : MonoBehaviour {
             }
         }
         _ccm.ShuffleDeck(AventurierDeckManager._aventurierDeck);
+    }
+
+    //Fonction pour lire le fichier Xml chargé
+    //et récupérer le deck d'usure
+    void LoadUsureDeck()
+    {
+        XmlNodeList list = _xmlDoc.DocumentElement.SelectNodes("/decks/deck");
+        foreach (XmlNode node in list)
+        {
+            if (node.Attributes["name"].Value == "Usure")
+            {
+                XmlNodeList cards = node.ChildNodes;
+                foreach (XmlNode card in cards)
+                {
+                    GameObject cardPrefab = Instantiate(_udm._cardModel);
+                    PlayableCard datas1 = cardPrefab.GetComponent<PlayableCard>(); ;
+                    datas1._name = card.Attributes["name"].Value;
+                    datas1._battleValue = int.Parse(card.Attributes["resistance"].Value);
+                    datas1._discardPrice = int.Parse(card.Attributes["defausse"].Value);
+                    datas1._effet = int.Parse(card.Attributes["effet"].Value);
+                    UsureDeckManager._usureDeck.Add(cardPrefab);
+                }
+                _udm.ShuffleDeck(UsureDeckManager._usureDeck);
+            }
+        }
     }
 
     //Permet de vérifier si le joueur peux piocher gratuitement
@@ -300,6 +331,7 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    //Fonction Qui gère le GameOver
     public void GameOver()
     {
 
