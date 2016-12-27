@@ -89,4 +89,33 @@ public class DonjonDeckManager : MonoBehaviour {
             gO.transform.rotation= Quaternion.Euler(0, 0, 0);
         }
     }
+
+    //Extra Draw qui coute 1 point de notoriété
+    public void ExtraDrawCard()
+    {
+        if(GameTurnManager._actualGameState == GameState.PreparerDonjon)
+        {
+            _gcm._notorietePoints--;
+            _gcm._notorietePointText.text = "" + _gcm._notorietePoints;
+            if (_donjonDeck.Count > 0)
+            {
+                PlayedCard._playedCardlist.Add(_donjonDeck[_donjonDeck.Count - 1]);
+                _donjonDeck.Remove(_donjonDeck[_donjonDeck.Count - 1]);
+                PlayedCard._playedCardlist[PlayedCard._playedCardlist.Count - 1].transform.SetParent(_donjonCardSpot.transform);
+                PlayedCard._playedCardlist[PlayedCard._playedCardlist.Count - 1].transform.localScale = new Vector3(1, 1, 1);
+            }
+            else if (_donjonDeck.Count == 0)
+            {
+                _donjonDefausseDeck.Add(UsureDeckManager._usureDeck[UsureDeckManager._usureDeck.Count - 1]);
+                UsureDeckManager._usureDeck.Remove(UsureDeckManager._usureDeck[UsureDeckManager._usureDeck.Count - 1]);
+                ResetDeck();
+                PlayedCard._playedCardlist.Add(_donjonDeck[_donjonDeck.Count - 1]);
+                _donjonDeck.Remove(_donjonDeck[_donjonDeck.Count - 1]);
+                PlayedCard._playedCardlist[PlayedCard._playedCardlist.Count - 1].transform.SetParent(_donjonCardSpot.transform);
+                PlayedCard._playedCardlist[PlayedCard._playedCardlist.Count - 1].transform.localScale = new Vector3(1, 1, 1);
+            }
+            _gcm.HasDraw();
+            UpdateText();
+        }
+    }
 }

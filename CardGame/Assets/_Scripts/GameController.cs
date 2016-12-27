@@ -52,6 +52,9 @@ public class GameController : MonoBehaviour {
     public bool _hasKillCritique1 = false;
     public bool _hasKillCritique2 = false;
 
+    public static int _maxExilePoints = 0;
+    public static int _exilePointsSpend = 0;
+
     void Start ()
     {
         _ddm = _donjonDeckObject.GetComponent<DonjonDeckManager>();
@@ -81,9 +84,13 @@ public class GameController : MonoBehaviour {
 
     void Update()
     {
-        if(GameTurnManager._actualGameState == GameState.PreparerDonjon)
+        if (GameTurnManager._actualGameState == GameState.PreparerDonjon)
         {
             UpdateAventurierCombatValue();
+            if (_exilePointsSpend != 0)
+            {
+                _exilePointsSpend = 0;
+            }
         }
 
         if(_notorietePoints <= 0)
@@ -259,6 +266,7 @@ public class GameController : MonoBehaviour {
                     DonjonDeckManager._donjonDefausseDeck.Add(gO);
                     gO.transform.SetParent(this.transform.parent);
                     gO.transform.position = new Vector3(-100, -100, 0);
+                    gO.transform.rotation = Quaternion.Euler(0, 0, 0);
                 }
                 PlayedCard._playedCardlist.Clear();
 
@@ -270,6 +278,7 @@ public class GameController : MonoBehaviour {
             }
             else if (_donjonBattleValue < _aventurierBattleValue)
             {
+                _maxExilePoints = _aventurierBattleValue - _donjonBattleValue;
                 GameTurnManager.ChangeState(GameState.Defaite);
             }
         }

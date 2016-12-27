@@ -27,6 +27,8 @@ public class PlayableCard : MonoBehaviour {
 
     }
 
+    //Fonction permettant la résolution d'un clic
+    //sur une carte jouer
     public void ClickResolution()
     {
         if(GameTurnManager._actualGameState == GameState.PreparerDonjon)
@@ -53,11 +55,15 @@ public class PlayableCard : MonoBehaviour {
             }
             else
             {
-                DonjonDeckManager._donjonExileDeck.Add(this.gameObject);
-                this.transform.SetParent(this.transform.parent.parent);
-                this.transform.position = new Vector3(-100, -100, 0);
-                _gcm._notorietePoints = _gcm._notorietePoints - _discardPrice;
-                _gcm._notorietePointText.text = "" + _gcm._notorietePoints;
+                if(GameController._exilePointsSpend + _discardPrice <= GameController._maxExilePoints)
+                {
+                    GameController._exilePointsSpend += _discardPrice;
+                    DonjonDeckManager._donjonExileDeck.Add(this.gameObject);
+                    this.transform.SetParent(this.transform.parent.parent);
+                    this.transform.position = new Vector3(-100, -100, 0);
+                    _gcm._notorietePoints = _gcm._notorietePoints - _discardPrice;
+                    _gcm._notorietePointText.text = "" + _gcm._notorietePoints;
+                }
             }
 
         }
