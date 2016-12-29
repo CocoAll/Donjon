@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <decks>
 	<deck name="Base">
-		<card name="a" resistance="-1" effet="0" defausse="1" nombre="5"/>
-		<card name="b" resistance="0" effet="0" defausse="1" nombre="6"/>
-		<card name="c" resistance="0" effet="1" defausse="1" nombre="3"/>
-		<card name="d" resistance="1" effet="0" defausse="1" nombre="3"/>
-		<card name="e" resistance="2" effet="0" defausse="1" nombre="1"/>
+		<card name="Stagière Gobelin" resistance="-1" effet="0" defausse="1" nombre="5"/>
+		<card name="Piège défailant" resistance="0" effet="0" defausse="1" nombre="6"/>
+		<card name="Piège presque fonctionnel" resistance="0" effet="1" defausse="1" nombre="3"/>
+		<card name="Rat féroce" resistance="1" effet="0" defausse="1" nombre="3"/>
+		<card name="Guerrier orc" resistance="2" effet="0" defausse="1" nombre="1"/>
 	</deck>
 	
 	<deck name="Confrontation">
-		<card name="a" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="a" resistance="0" effet="0" defausse="1" />
-		<card name="b" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="b" resistance="0" effet="0" defausse="1" />
-		<card name="c" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="c" resistance="0" effet="0" defausse="1" />
-		<card name="d" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="d" resistance="0" effet="0" defausse="1" />
-		<card name="e" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="e" resistance="0" effet="0" defausse="1" />
-		<card name="f" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="f" resistance="0" effet="0" defausse="1" />
-		<card name="g" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="g" resistance="0" effet="0" defausse="1" />
-		<card name="h" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="h" resistance="0" effet="0" defausse="1" />
-		<card name="i" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="i" resistance="0" effet="0" defausse="1" />
-		<card name="j" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="j" resistance="0" effet="0" defausse="1" />
-		<card name="k" nv1="1" nv2="3" nv3="6" pioche="2" newCardName="k" resistance="1" effet="0" defausse="1" />
-		<card name="l" nv1="1" nv2="3" nv3="6" pioche="2" newCardName="l" resistance="1" effet="0" defausse="1" />
-		<card name="m" nv1="1" nv2="3" nv3="6" pioche="2" newCardName="m" resistance="1" effet="0" defausse="1" />
-		<card name="n" nv1="1" nv2="3" nv3="6" pioche="2" newCardName="n" resistance="1" effet="0" defausse="1" />
-		<card name="o" nv1="1" nv2="3" nv3="6" pioche="2" newCardName="o" resistance="1" effet="0" defausse="1" />
-		<card name="p" nv1="1" nv2="3" nv3="6" pioche="2" newCardName="p" resistance="1" effet="0" defausse="1" />
-		<card name="q" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="q" resistance="2" effet="0" defausse="1" />
-		<card name="r" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="r" resistance="2" effet="0" defausse="1" />
-		<card name="s" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="s" resistance="2" effet="0" defausse="1" />
-		<card name="t" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="t" resistance="2" effet="0" defausse="1" />
-		<card name="u" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="u" resistance="2" effet="0" defausse="1" />
-		<card name="v" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="v" resistance="2" effet="0" defausse="1" />
-		<card name="w" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="w" resistance="2" effet="0" defausse="1" />
-		<card name="x" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="x" resistance="2" effet="0" defausse="1" />
-		<card name="y" nv1="4" nv2="7" nv3="11" pioche="4" newCardName="y" resistance="3" effet="0" defausse="1" />
-		<card name="z" nv1="4" nv2="7" nv3="11" pioche="4" newCardName="z" resistance="3" effet="0" defausse="1" />
-		<card name="aa" nv1="4" nv2="7" nv3="11" pioche="4" newCardName="aa" resistance="3" effet="0" defausse="1" />
-		<card name="bb" nv1="4" nv2="7" nv3="11" pioche="4" newCardName="bb" resistance="3" effet="0" defausse="1" />
-		<card name="cc" nv1="5" nv2="9" nv3="14" pioche="5" newCardName="cc" resistance="3" effet="0" defausse="1" />
-		<card name="dd" nv1="5" nv2="9" nv3="14" pioche="5" newCardName="dd" resistance="3" effet="0" defausse="1" />
+		<card name="Aventurier touriste" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="Mur Immaculé" resistance="0" effet="2" defausse="1" />
+		<card name="Aventurier touriste" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="Garde Gobelin" resistance="0" effet="3" defausse="1" />
+		<card name="Aventurier touriste" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="Mage Noir" resistance="0" effet="4" defausse="1" />
+		<card name="Aventurier touriste" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="Copycat" resistance="0" effet="5" defausse="1" />
+		<card name="Aventurier touriste" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="Piège premier prix" resistance="0" effet="6" defausse="1" />
+		<card name="Aventurier touriste" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="Piège premier prix" resistance="0" effet="6" defausse="1" />
+		<card name="Aventurier touriste" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="Necromencien" resistance="0" effet="7" defausse="1" />
+		<card name="Aventurier touriste" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="Necromencien" resistance="0" effet="7" defausse="1" />
+		<card name="Aventurier touriste" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="Chiens de garde" resistance="0" effet="8" defausse="1" />
+		<card name="Aventurier touriste" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="Chiens de garde" resistance="0" effet="8" defausse="1" />
+		<card name="Aventurier débutant" nv1="1" nv2="3" nv3="6" pioche="2" newCardName="Copycat" resistance="1" effet="5" defausse="1" />
+		<card name="Aventurier débutant" nv1="1" nv2="3" nv3="6" pioche="2" newCardName="Mage Noir" resistance="1" effet="4" defausse="1" />
+		<card name="Aventurier débutant" nv1="1" nv2="3" nv3="6" pioche="2" newCardName="Garde Gobelin" resistance="1" effet="3" defausse="1" />
+		<card name="Aventurier débutant" nv1="1" nv2="3" nv3="6" pioche="2" newCardName="Doppleganger" resistance="1" effet="9" defausse="1" />
+		<card name="Aventurier débutant" nv1="1" nv2="3" nv3="6" pioche="2" newCardName="Piège" resistance="1" effet="6" defausse="1" />
+		<card name="Aventurier débutant" nv1="1" nv2="3" nv3="6" pioche="2" newCardName="Piège" resistance="1" effet="6" defausse="1" />
+		<card name="Archer" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="Guerrier orc" resistance="2" effet="0" defausse="1" />
+		<card name="Guerrier" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="Guerrier orc" resistance="2" effet="0" defausse="1" />
+		<card name="Voleur" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="Troll à Deux Têtes" resistance="2" effet="10" defausse="1" />
+		<card name="Mage Blanc" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="Mage Noir" resistance="2" effet="4" defausse="1" />
+		<card name="Mage Noir" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="Sage" resistance="2" effet="11" defausse="1" />
+		<card name="Moine" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="Illusioniste" resistance="2" effet="12" defausse="1" />
+		<card name="Alchimiste" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="Piège Mortel" resistance="2" effet="6" defausse="1" />
+		<card name="Rodeur" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="Doppleganger" resistance="2" effet="9" defausse="1" />
+		<card name="Guerrier Noir" nv1="4" nv2="7" nv3="11" pioche="4" newCardName="Mage Noir" resistance="3" effet="4" defausse="1" />
+		<card name="Technomage" nv1="4" nv2="7" nv3="11" pioche="4" newCardName="Troll à Deux Têtes" resistance="3" effet="10" defausse="1" />
+		<card name="Assasin" nv1="4" nv2="7" nv3="11" pioche="4" newCardName="Sage" resistance="3" effet="0" defausse="1" />
+		<card name="Démoniste" nv1="4" nv2="7" nv3="11" pioche="4" newCardName="Illusioniste" resistance="3" effet="12" defausse="1" />
+		<card name="Paladin Sacré" nv1="5" nv2="9" nv3="14" pioche="5" newCardName="Grande Liche" resistance="4" effet="0" defausse="1" />
+		<card name="Archimage" nv1="5" nv2="9" nv3="14" pioche="5" newCardName="Troll des Cavernes" resistance="4" effet="0" defausse="1" />
 	</deck>
 	
 	<deck name="Usure">

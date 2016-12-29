@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 public class ListeActionsTextManager : MonoBehaviour {
 
@@ -35,9 +34,6 @@ public class ListeActionsTextManager : MonoBehaviour {
                 break;
             case GameState.PreparerDonjon:
                 _actionsText.text = "-Piocher une carte donjon      -Résoudre  le combat    -Regarder les cartes défaussées";
-                break;
-            case GameState.Combattre:
-                _actionsText.text = "";
                 break;
             case GameState.Victoire:
                 _actionsText.text = "-Finir le tour    -Regarder cartes défausses";

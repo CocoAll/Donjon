@@ -1,14 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Xml;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
 
 public class GameController : MonoBehaviour {
 
-    private int _aventurierLevel = 1;
+    public int _aventurierLevel = 1;
     private int _aventurierMaxLevel = 3;
     public int _notorietePoints = 20;
     public Text _notorietePointText = null;
@@ -27,10 +24,6 @@ public class GameController : MonoBehaviour {
     private GameObject _usureDeckObject = null;
     private UsureDeckManager _udm = null;
 
-    [SerializeField]
-    private GameObject _playedCardObject = null;
-    private PlayedCard _pcm = null;
-
     private string _xmlPath = null;
     private XmlDocument _xmlDoc = null;
 
@@ -39,12 +32,11 @@ public class GameController : MonoBehaviour {
     public int _drawnDonjonCard = 0;
     [SerializeField]
     private GameObject _choosenAventurierSpot = null;
-    private ChoosenAventurier _cam = null;
+    public ChoosenAventurier _cam = null;
 
     [SerializeField]
     private Text _donjonBattleValueText = null;
-    [SerializeField]
-    private Text _aventurierBattleValueText = null;
+    public Text _aventurierBattleValueText = null;
 
     public int _aventurierBattleValue = 0;
     public int _donjonBattleValue = 0;
@@ -55,11 +47,20 @@ public class GameController : MonoBehaviour {
     public static int _maxExilePoints = 0;
     public static int _exilePointsSpend = 0;
 
+    public GameObject _pausePanel = null;
+    public GameObject _gameOverPanel = null;
+    public GameObject _victoirePanel = null;
+
+    public GameObject _critique1 = null;
+    public GameObject _critique2 = null;
+
+    public int _waitingEffet = 0;
+    public GameObject _cardUsingEffet = null;
+
     void Start ()
     {
         _ddm = _donjonDeckObject.GetComponent<DonjonDeckManager>();
         _ccm = _aventurierDeckObject.GetComponent<AventurierDeckManager>();
-        _pcm = _playedCardObject.GetComponent<PlayedCard>();
         _cam = _choosenAventurierSpot.GetComponent<ChoosenAventurier>();
         _udm = _usureDeckObject.GetComponent<UsureDeckManager>();
 
@@ -93,10 +94,23 @@ public class GameController : MonoBehaviour {
             }
         }
 
-        if(_notorietePoints <= 0)
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.F10))
+        {
+            _pausePanel.GetComponent<PauseController>()._previousState = GameTurnManager._actualGameState;
+            GameTurnManager.ChangeState(GameState.Pause);
+            _pausePanel.SetActive(true);
+        }
+
+        if (_notorietePoints <= 0)
         {
             GameTurnManager.ChangeState(GameState.PartiePerdu);
             GameOver();
+        }
+
+        if(_hasKillCritique2 == true)
+        {
+            GameTurnManager.ChangeState(GameState.Victoire);
+            Victoire();
         }
     }
 
@@ -221,7 +235,8 @@ public class GameController : MonoBehaviour {
         int donjonValue = 0;
         foreach (GameObject gO in PlayedCard._playedCardlist)
         {
-            donjonValue += gO.GetComponent<PlayableCard>()._battleValue;
+            if(gO.GetComponent<PlayableCard>()._hasBeenDestroyed == false)
+                donjonValue += gO.GetComponent<PlayableCard>()._battleValue;
         }
 
         _donjonBattleValueText.text = "" + donjonValue;
@@ -257,6 +272,7 @@ public class GameController : MonoBehaviour {
     //ce que le joueur peut faire ensuite
     public void DoBattleResolution()
     {
+        //Cas ou on est pas contre un des 2 critiques de fin
         if (GameTurnManager._actualGameState == GameState.PreparerDonjon && _drawnDonjonCard > 0 ) {
             if (_donjonBattleValue >= _aventurierBattleValue)
             {
@@ -280,6 +296,55 @@ public class GameController : MonoBehaviour {
             {
                 _maxExilePoints = _aventurierBattleValue - _donjonBattleValue;
                 GameTurnManager.ChangeState(GameState.Defaite);
+            }
+        }
+        //Cas contre le premier critique
+        else if(GameTurnManager._actualGameState == GameState.CombatCritique1 && _drawnDonjonCard > 0)
+        {
+            if(_donjonBattleValue >= _critique1.GetComponent<CritiqueCard>()._battleValue)
+            {
+                _hasKillCritique1 = true;
+
+                GameTurnManager.ChangeState(GameState.Victoire);
+
+                foreach (GameObject gO in PlayedCard._playedCardlist)
+                {
+                    DonjonDeckManager._donjonDefausseDeck.Add(gO);
+                    gO.transform.SetParent(this.transform.parent);
+                    gO.transform.position = new Vector3(-100, -100, 0);
+                    gO.transform.rotation = Quaternion.Euler(0, 0, 0);
+                }
+                PlayedCard._playedCardlist.Clear();
+
+                _cam._choosenOne.transform.SetParent(this.transform.parent);
+                _cam._choosenOne.transform.position = new Vector3(-100, -100, 0);
+                _cam._choosenOne = null;
+            }
+            else if (_donjonBattleValue < _critique1.GetComponent<CritiqueCard>()._battleValue && _drawnDonjonCard == _critique1.GetComponent<CritiqueCard>()._maxDraw)
+            {
+                GameTurnManager.ChangeState(GameState.PartiePerdu);
+                GameOver();
+            }
+            else if (_donjonBattleValue < _critique1.GetComponent<CritiqueCard>()._battleValue && _drawnDonjonCard < _critique1.GetComponent<CritiqueCard>()._maxDraw)
+            {
+                Debug.Log("Can still draw cards !!!");
+            }
+        }
+        //Cas contre le deuxième critique
+        else if (GameTurnManager._actualGameState == GameState.CombatCritique2 && _drawnDonjonCard > 0)
+        {
+            if (_donjonBattleValue >= _critique2.GetComponent<CritiqueCard>()._battleValue)
+            {
+                _hasKillCritique2 = true;
+            }
+            else if (_donjonBattleValue < _critique1.GetComponent<CritiqueCard>()._battleValue && _drawnDonjonCard == _critique1.GetComponent<CritiqueCard>()._maxDraw)
+            {
+                GameTurnManager.ChangeState(GameState.PartiePerdu);
+                GameOver();
+            }
+            else if (_donjonBattleValue < _critique1.GetComponent<CritiqueCard>()._battleValue && _drawnDonjonCard < _critique1.GetComponent<CritiqueCard>()._maxDraw)
+            {
+                Debug.Log("Can still draw cards !!!");
             }
         }
     }
@@ -319,10 +384,12 @@ public class GameController : MonoBehaviour {
                     if (_hasKillCritique1 == false)
                     {
                         GameTurnManager.ChangeState(GameState.CombatCritique1);
+                        SetFistBossBattle();
                     }
                     else if (_hasKillCritique2 == false)
                     {
                         GameTurnManager.ChangeState(GameState.CombatCritique2);
+                        SetSecondBossBattle();
                     }
                 }
                 else if (_aventurierLevel < _aventurierMaxLevel)
@@ -340,9 +407,31 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    //Prepare le combat contre le premier critique
+    public void SetFistBossBattle()
+    {
+        _cam._choosenOne = Instantiate(_critique1);
+        _aventurierBattleValue = _critique1.GetComponent<CritiqueCard>()._battleValue;
+        _aventurierBattleValueText.text = "" + _aventurierBattleValue;
+    }
+
+    //Prepare le combat contre le premier critique
+    public void SetSecondBossBattle()
+    {
+        _cam._choosenOne = Instantiate(_critique2);
+        _aventurierBattleValue = _critique1.GetComponent<CritiqueCard>()._battleValue;
+        _aventurierBattleValueText.text = "" + _aventurierBattleValue;
+    }
+
     //Fonction Qui gère le GameOver
     public void GameOver()
     {
+        _gameOverPanel.SetActive(true);
+    }
 
+    //Fonction qui gère la victoire
+    public void Victoire()
+    {
+        _victoirePanel.SetActive(true);
     }
 }
