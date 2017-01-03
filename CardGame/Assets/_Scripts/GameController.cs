@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour {
 
     [SerializeField]
     private GameObject _donjonDeckObject = null;
-    private DonjonDeckManager _ddm = null;
+    public DonjonDeckManager _ddm = null;
 
     [SerializeField]
     private GameObject _aventurierDeckObject = null;
@@ -30,8 +30,8 @@ public class GameController : MonoBehaviour {
     public Canvas _screen = null;
 
     public int _drawnDonjonCard = 0;
-    [SerializeField]
-    private GameObject _choosenAventurierSpot = null;
+
+    public  GameObject _choosenAventurierSpot = null;
     public ChoosenAventurier _cam = null;
 
     [SerializeField]
@@ -40,6 +40,7 @@ public class GameController : MonoBehaviour {
 
     public int _aventurierBattleValue = 0;
     public int _donjonBattleValue = 0;
+    public int _donjonBonus = 0;
 
     public bool _hasKillCritique1 = false;
     public bool _hasKillCritique2 = false;
@@ -56,6 +57,8 @@ public class GameController : MonoBehaviour {
 
     public int _waitingEffet = 0;
     public GameObject _cardUsingEffet = null;
+
+    public GameObject _regardSpot = null;
 
     void Start ()
     {
@@ -238,7 +241,7 @@ public class GameController : MonoBehaviour {
             if(gO.GetComponent<PlayableCard>()._hasBeenDestroyed == false)
                 donjonValue += gO.GetComponent<PlayableCard>()._battleValue;
         }
-
+        donjonValue += _donjonBonus;
         _donjonBattleValueText.text = "" + donjonValue;
         _donjonBattleValue = donjonValue;
 
@@ -433,5 +436,15 @@ public class GameController : MonoBehaviour {
     public void Victoire()
     {
         _victoirePanel.SetActive(true);
+    }
+
+    //Permet de mettre en place la zone de regard
+    public void FaireRegard()
+    {
+        _regardSpot.SetActive(true);
+        for(int i = 1; i <= 3; i++)
+        {
+            DonjonDeckManager._donjonDeck[DonjonDeckManager._donjonDeck.Count - i].transform.SetParent(_regardSpot.transform);
+        }
     }
 }

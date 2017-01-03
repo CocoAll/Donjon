@@ -29,7 +29,7 @@ public class PlayableCard : MonoBehaviour {
     //sur une carte jouer
     public void ClickResolution()
     {
-        if(GameTurnManager._actualGameState == GameState.PreparerDonjon)
+        if(GameTurnManager._actualGameState == GameState.PreparerDonjon && this.transform.parent != _gcm._choosenAventurierSpot.transform)
         {
             if(_hasUseEffet == false)
             {
@@ -65,6 +65,7 @@ public class PlayableCard : MonoBehaviour {
             }
 
         }
+        //Permet de gerer le clique si l'effet en cour est le 3
         else if(GameTurnManager._actualGameState == GameState.EffetEnCours && _gcm._waitingEffet == 3)
         {
             this.transform.SetParent(this.transform.parent.parent);
@@ -80,6 +81,7 @@ public class PlayableCard : MonoBehaviour {
             _gcm._waitingEffet = 0;
             GameTurnManager.ChangeState(GameState.PreparerDonjon);
         }
+        //Permet de gerer le clique si l'effet en cour est le 4
         else if (GameTurnManager._actualGameState == GameState.EffetEnCours && _gcm._waitingEffet == 4)
         {
             _hasBeenDestroyed = true;
@@ -87,12 +89,39 @@ public class PlayableCard : MonoBehaviour {
             _gcm._waitingEffet = 0;
             GameTurnManager.ChangeState(GameState.PreparerDonjon);
         }
+        //Permet de gerer le clique si l'effet en cour est le 5
         else if (GameTurnManager._actualGameState == GameState.EffetEnCours && _gcm._waitingEffet == 5)
         {
             if(_gcm._cardUsingEffet != this.gameObject)
             {
                 _gcm._cardUsingEffet.GetComponent<PlayableCard>()._effet = this._effet;
             }
+        }
+        //Permet de gerer le clique si l'effet en cour est le 8
+        else if (GameTurnManager._actualGameState == GameState.EffetEnCours && _gcm._waitingEffet == 8)
+        {
+            DonjonDeckManager._donjonDefausseDeck.Add(this.gameObject);
+            this.transform.SetParent(_gcm.transform.parent);
+            _gcm._drawnDonjonCard--;
+            _gcm._ddm.DrawCard();
+            _gcm.UpdateDonjonCombatValue();
+        }
+        //Permet de gerer le clique si l'effet en cour est le 9
+        else if (GameTurnManager._actualGameState == GameState.EffetEnCours && _gcm._waitingEffet == 9)
+        {
+            _gcm._donjonBonus += this._battleValue;
+            _gcm.UpdateDonjonCombatValue();
+        }
+        //Permet de resoudre le regard 3 (effet 11)
+        else if(GameTurnManager._actualGameState == GameState.Regard3 && this.transform.parent == _gcm._regardSpot.transform)
+        {
+            for (int i = 1; i <= 3; i++)
+            {
+                DonjonDeckManager._donjonDeck[DonjonDeckManager._donjonDeck.Count - i].transform.SetParent(_gcm.transform.parent);
+            }
+            DonjonDeckManager._donjonDefausseDeck.Add(this.gameObject);
+            DonjonDeckManager._donjonDeck.Remove(this.gameObject);
+            GameTurnManager.ChangeState(GameState.PreparerDonjon);
         }
 
     }
@@ -176,12 +205,18 @@ public class PlayableCard : MonoBehaviour {
                 _gcm._drawnDonjonCard -= 2;
                 break;
             case 8:
-                //Premet de defausser jusqu'a 2 carte
+                //Premet de defausser jusqu'a 1 carte
                 //Et d'en repiocher à la place
+                _gcm._waitingEffet = 8;
+                _gcm._cardUsingEffet = this.gameObject;
+                GameTurnManager.ChangeState(GameState.EffetEnCours);
                 break;
             case 9:
                 //Permet de doublé la valeur de combat
                 //D'une carte donnée
+                _gcm._waitingEffet = 9;
+                _gcm._cardUsingEffet = this.gameObject;
+                GameTurnManager.ChangeState(GameState.EffetEnCours);
                 break;
             case 10:
                 //Une pioche supplémentaire possible
@@ -190,10 +225,8 @@ public class PlayableCard : MonoBehaviour {
             case 11:
                 //Permet de regardé les 3 cartes du dessus 
                 //du deck et de pouvoir en defausser une
-                break;
-            case 12:
-                //Premet de defausser 1 carte
-                //Et d'en repiocher à la place
+                GameTurnManager.ChangeState(GameState.Regard3);
+                _gcm.FaireRegard();
                 break;
         }
         if(_effet != 5)

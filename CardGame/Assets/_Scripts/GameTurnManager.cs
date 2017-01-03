@@ -14,7 +14,8 @@ public enum GameState
     PartieGagné = 8,
     PartiePerdu = 9,
     Pause = 10,
-    EffetEnCours = 11
+    EffetEnCours = 11,
+    Regard3 = 12
 }
 //C'est la classe qui gère les tours de jeu, et les actions possibles par le joueur
 public class GameTurnManager : MonoBehaviour {

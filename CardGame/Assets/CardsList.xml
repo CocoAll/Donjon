@@ -30,13 +30,13 @@
 		<card name="Voleur" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="Troll à Deux Têtes" resistance="2" effet="10" defausse="1" />
 		<card name="Mage Blanc" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="Mage Noir" resistance="2" effet="4" defausse="1" />
 		<card name="Mage Noir" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="Sage" resistance="2" effet="11" defausse="1" />
-		<card name="Moine" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="Illusioniste" resistance="2" effet="12" defausse="1" />
+		<card name="Moine" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="Illusioniste" resistance="2" effet="8" defausse="1" />
 		<card name="Alchimiste" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="Piège Mortel" resistance="2" effet="6" defausse="1" />
 		<card name="Rodeur" nv1="2" nv2="5" nv3="8" pioche="3" newCardName="Doppleganger" resistance="2" effet="9" defausse="1" />
 		<card name="Guerrier Noir" nv1="4" nv2="7" nv3="11" pioche="4" newCardName="Mage Noir" resistance="3" effet="4" defausse="1" />
 		<card name="Technomage" nv1="4" nv2="7" nv3="11" pioche="4" newCardName="Troll à Deux Têtes" resistance="3" effet="10" defausse="1" />
 		<card name="Assasin" nv1="4" nv2="7" nv3="11" pioche="4" newCardName="Sage" resistance="3" effet="0" defausse="1" />
-		<card name="Démoniste" nv1="4" nv2="7" nv3="11" pioche="4" newCardName="Illusioniste" resistance="3" effet="12" defausse="1" />
+		<card name="Démoniste" nv1="4" nv2="7" nv3="11" pioche="4" newCardName="Illusioniste" resistance="3" effet="8" defausse="1" />
 		<card name="Paladin Sacré" nv1="5" nv2="9" nv3="14" pioche="5" newCardName="Grande Liche" resistance="4" effet="0" defausse="1" />
 		<card name="Archimage" nv1="5" nv2="9" nv3="14" pioche="5" newCardName="Troll des Cavernes" resistance="4" effet="0" defausse="1" />
 	</deck>
