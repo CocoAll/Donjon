@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour {
 
     public int _aventurierLevel = 1;
     private int _aventurierMaxLevel = 3;
+
     public int _notorietePoints = 20;
     public Text _notorietePointText = null;
     [SerializeField]
@@ -225,7 +226,6 @@ public class GameController : MonoBehaviour {
         return canDraw;
     }
 
-
     //Fonction appelé après chaque pioche dans le deck donjon
     public void HasDraw()
     {
@@ -277,6 +277,27 @@ public class GameController : MonoBehaviour {
     {
         //Cas ou on est pas contre un des 2 critiques de fin
         if (GameTurnManager._actualGameState == GameState.PreparerDonjon && _drawnDonjonCard > 0 ) {
+            //On effectue les effets des cartes d'usures, si il y en as
+            foreach (GameObject gO in PlayedCard._playedCardlist)
+            {
+                if(gO.GetComponent<PlayableCard>()._hasBeenDestroyed != true)
+                {
+                    if (gO.GetComponent<PlayableCard>()._effet < 0)
+                    {
+                        if (gO.GetComponent<PlayableCard>()._effet == -1)
+                        {
+                            this._notorietePoints--;
+                            _notorietePointText.text = "" + _notorietePoints;
+                        }
+                        else if (gO.GetComponent<PlayableCard>()._effet == -2)
+                        {
+                            this._notorietePoints -= 2;
+                            _notorietePointText.text = "" + _notorietePoints;
+                        }
+                    }
+                }
+               
+            }
             if (_donjonBattleValue >= _aventurierBattleValue)
             {
                 GameTurnManager.ChangeState(GameState.Victoire);
@@ -298,6 +319,8 @@ public class GameController : MonoBehaviour {
             else if (_donjonBattleValue < _aventurierBattleValue)
             {
                 _maxExilePoints = _aventurierBattleValue - _donjonBattleValue;
+                this._notorietePoints -= _maxExilePoints;
+                _notorietePointText.text = "" + _notorietePoints;
                 GameTurnManager.ChangeState(GameState.Defaite);
             }
         }

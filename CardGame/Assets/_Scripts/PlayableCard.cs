@@ -34,7 +34,7 @@ public class PlayableCard : MonoBehaviour {
             if(_hasUseEffet == false)
             {
                 CardEffetResolution();
-                if(_effet != 0)
+                if(_effet > 0)
                 {
                     this.transform.rotation = Quaternion.Euler(0,0,90);
                 }
@@ -59,8 +59,8 @@ public class PlayableCard : MonoBehaviour {
                     DonjonDeckManager._donjonExileDeck.Add(this.gameObject);
                     this.transform.SetParent(this.transform.parent.parent);
                     this.transform.position = new Vector3(-100, -100, 0);
-                    _gcm._notorietePoints = _gcm._notorietePoints - _discardPrice;
-                    _gcm._notorietePointText.text = "" + _gcm._notorietePoints;
+                    /*_gcm._notorietePoints = _gcm._notorietePoints - _discardPrice;
+                    _gcm._notorietePointText.text = "" + _gcm._notorietePoints;*/
                 }
             }
 

@@ -15,8 +15,8 @@
 		<card name="Aventurier touriste" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="Copycat" resistance="0" effet="5" defausse="1" />
 		<card name="Aventurier touriste" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="Piège premier prix" resistance="0" effet="6" defausse="1" />
 		<card name="Aventurier touriste" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="Piège premier prix" resistance="0" effet="6" defausse="1" />
-		<card name="Aventurier touriste" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="Necromencien" resistance="0" effet="7" defausse="1" />
-		<card name="Aventurier touriste" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="Necromencien" resistance="0" effet="7" defausse="1" />
+		<card name="Aventurier touriste" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="Necromancien" resistance="0" effet="7" defausse="1" />
+		<card name="Aventurier touriste" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="Necromancien" resistance="0" effet="7" defausse="1" />
 		<card name="Aventurier touriste" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="Chiens de garde" resistance="0" effet="8" defausse="1" />
 		<card name="Aventurier touriste" nv1="0" nv2="1" nv3="3" pioche="1" newCardName="Chiens de garde" resistance="0" effet="8" defausse="1" />
 		<card name="Aventurier débutant" nv1="1" nv2="3" nv3="6" pioche="2" newCardName="Copycat" resistance="1" effet="5" defausse="1" />
@@ -42,8 +42,8 @@
 	</deck>
 	
 	<deck name="Usure">
-		<card name="a" resistance="0" effet="0" defausse="2" lvlusure="1" nombre="2"/>
-		<card name="b" resistance="0" effet="0" defausse="2" lvlusure="2" nombre="1"/>
+		<card name="a" resistance="0" effet="-2" defausse="2" lvlusure="1" nombre="2"/>
+		<card name="b" resistance="0" effet="-1" defausse="2" lvlusure="2" nombre="1"/>
 		<card name="c" resistance="0" effet="0" defausse="2" lvlusure="1" nombre="1"/>
 		<card name="d" resistance="0" effet="0" defausse="2" lvlusure="1" nombre="1"/>
 		<card name="e" resistance="-1" effet="0" defausse="2" lvlusure="1" nombre="2"/>

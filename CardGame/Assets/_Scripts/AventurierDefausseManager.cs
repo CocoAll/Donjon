@@ -10,45 +10,49 @@ public class AventurierDefausseManager : MonoBehaviour {
 
     public void OnClickAventurierDefausse()
     {
-        _defausseSpot.SetActive(true);
-        _defausseSpot.transform.SetAsLastSibling();
-        int i = AventurierDeckManager._aventurierDefausseDeck.Count;
-        if(i <= 30 && i > 0)
+        if (GameTurnManager._actualGameState != GameState.Pause && GameTurnManager._actualGameState != GameState.Victoire && GameTurnManager._actualGameState != GameState.Defaite && GameTurnManager._actualGameState != GameState.Regard3)
         {
-            for(int j = 0; j < i; j++)
+            _defausseSpot.SetActive(true);
+            _defausseSpot.transform.SetAsLastSibling();
+            int i = AventurierDeckManager._aventurierDefausseDeck.Count;
+            if (i <= 30 && i > 0)
             {
-                if (j < 10)
+                for (int j = 0; j < i; j++)
                 {
-                    AventurierDeckManager._aventurierDefausseDeck[j].transform.SetParent(_1to10.transform);
+                    if (j < 10)
+                    {
+                        AventurierDeckManager._aventurierDefausseDeck[j].transform.SetParent(_1to10.transform);
+                    }
+                    else if (j < 20)
+                    {
+                        AventurierDeckManager._aventurierDefausseDeck[j].transform.SetParent(_11to20.transform);
+                    }
+                    else
+                    {
+                        AventurierDeckManager._aventurierDefausseDeck[j].transform.SetParent(_21to30.transform);
+                    }
                 }
-                else if (j < 20)
+            }
+            else if (i > 30)
+            {
+                for (int j = 0; j < 30; j++)
                 {
-                    AventurierDeckManager._aventurierDefausseDeck[j].transform.SetParent(_11to20.transform);
-                }
-                else
-                {
-                    AventurierDeckManager._aventurierDefausseDeck[j].transform.SetParent(_21to30.transform);
+                    if (j < 10)
+                    {
+                        AventurierDeckManager._aventurierDefausseDeck[j].transform.SetParent(_1to10.transform);
+                    }
+                    else if (j < 20)
+                    {
+                        AventurierDeckManager._aventurierDefausseDeck[j].transform.SetParent(_11to20.transform);
+                    }
+                    else
+                    {
+                        AventurierDeckManager._aventurierDefausseDeck[j].transform.SetParent(_21to30.transform);
+                    }
                 }
             }
         }
-        else if(i > 30)
-        {
-            for (int j = 0; j < 30; j++)
-            {
-                if (j < 10)
-                {
-                    AventurierDeckManager._aventurierDefausseDeck[j].transform.SetParent(_1to10.transform);
-                }
-                else if (j < 20)
-                {
-                    AventurierDeckManager._aventurierDefausseDeck[j].transform.SetParent(_11to20.transform);
-                }
-                else
-                {
-                    AventurierDeckManager._aventurierDefausseDeck[j].transform.SetParent(_21to30.transform);
-                }
-            }
-        }
+
     }
 
     void Update()
