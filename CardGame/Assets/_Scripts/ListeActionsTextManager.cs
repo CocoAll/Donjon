@@ -30,28 +30,28 @@ public class ListeActionsTextManager : MonoBehaviour {
                 Debug.Log("Cas de texte non gérer");
                 break;
             case GameState.ChoisirAventurier:
-                _actionsText.text = "-Piocher une carte aventurier      -Choisir une carte aventurier   -Regarder les cartes défaussées";
+                _actionsText.text = "-Piocher une carte aventurier \n-Choisir une carte aventurier \n-Regarder les cartes défaussées";
                 break;
             case GameState.PreparerDonjon:
-                _actionsText.text = "-Piocher une carte donjon          -Résoudre  le combat    -Regarder les cartes défaussées";
+                _actionsText.text = "-Piocher une carte donjon \n-Résoudre  le combat \n-Regarder les cartes défaussées";
                 break;
             case GameState.Victoire:
-                _actionsText.text = "-Finir le tour    -Regarder cartes défausses";
+                _actionsText.text = "-Finir le tour \n-Regarder cartes défausses";
                 break;
             case GameState.Defaite:
-                _actionsText.text = "-Exiler carte (Double click)               -Finir le tour          -Regarder cartes défausses";
+                _actionsText.text = "-Exiler carte (Double click) \n-Finir le tour \n-Regarder cartes défausses";
                 break;
             case GameState.FinDeTour:
                 _actionsText.text = "";
                 break;
             case GameState.CombatCritique1:
-                _actionsText.text = "-Piocher une carte donjon          -Résoudre  le combat    -Regarder les cartes défaussées";
+                _actionsText.text = "-Piocher une carte donjon \n-Résoudre  le combat \n-Regarder les cartes défaussées";
                 break;
             case GameState.CombatCritique2:
-                _actionsText.text = "-Piocher une carte donjon          -Résoudre  le combat    -Regarder les cartes défaussées";
+                _actionsText.text = "-Piocher une carte donjon \n-Résoudre  le combat \n-Regarder les cartes défaussées";
                 break;
             case GameState.Regard3:
-                _actionsText.text = "-Defausser une des cartes          -Regarder les cartes défaussées";
+                _actionsText.text = "-Defausser une des cartes \n-Regarder les cartes défaussées";
                 break;
         }
     }

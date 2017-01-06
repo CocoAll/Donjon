@@ -86,7 +86,6 @@ public class DonjonDeckManager : MonoBehaviour {
         foreach (GameObject gO in _donjonDeck)
         {
             gO.GetComponent<PlayableCard>()._hasUseEffet = false;
-            gO.transform.rotation= Quaternion.Euler(0, 0, 0);
         }
     }
 

@@ -10,7 +10,7 @@ public class DonjonDefausseManager : MonoBehaviour {
 
     public void OnClickDonjonDefausse()
     {
-        if (GameTurnManager._actualGameState != GameState.Pause && GameTurnManager._actualGameState != GameState.Victoire && GameTurnManager._actualGameState != GameState.Defaite && GameTurnManager._actualGameState != GameState.Regard3)
+        if (GameTurnManager._actualGameState != GameState.Pause && GameTurnManager._actualGameState != GameState.PartieGagné && GameTurnManager._actualGameState != GameState.PartiePerdu && GameTurnManager._actualGameState != GameState.Regard3)
         {
             _defausseSpot.SetActive(true);
             _defausseSpot.transform.SetAsLastSibling();

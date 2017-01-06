@@ -26,7 +26,8 @@ public class GameController : MonoBehaviour {
     private UsureDeckManager _udm = null;
 
     private string _xmlPath = null;
-    private XmlDocument _xmlDoc = null;
+
+    public XmlDocument _xmlDoc = null;
 
     public Canvas _screen = null;
 
@@ -68,7 +69,7 @@ public class GameController : MonoBehaviour {
         _cam = _choosenAventurierSpot.GetComponent<ChoosenAventurier>();
         _udm = _usureDeckObject.GetComponent<UsureDeckManager>();
 
-        _xmlPath = Application.dataPath + @"/CardsList.xml";
+        _xmlPath = Application.dataPath + "/StreamingAssets/CardsList.xml";
         _xmlDoc = new XmlDocument();
         if (File.Exists(_xmlPath))
         {
@@ -105,7 +106,7 @@ public class GameController : MonoBehaviour {
             _pausePanel.SetActive(true);
         }
 
-        if (_notorietePoints <= 0)
+        if (_notorietePoints < 0)
         {
             GameTurnManager.ChangeState(GameState.PartiePerdu);
             GameOver();
@@ -140,6 +141,7 @@ public class GameController : MonoBehaviour {
                         datas._battleValue = int.Parse(card.Attributes["resistance"].Value);
                         datas._discardPrice = int.Parse(card.Attributes["defausse"].Value);
                         datas._effet = int.Parse(card.Attributes["effet"].Value);
+                        datas.UpdatePlayableTexts();
                         DonjonDeckManager._donjonDeck.Add(cardPrefab);
                     }
 
@@ -176,6 +178,7 @@ public class GameController : MonoBehaviour {
                     datas2._maxFreeCards = int.Parse(card.Attributes["pioche"].Value);
                     datas2._aventurierCardSpot = _ccm._aventurierCardSpot;
                     datas2._selectedAventurierCardSpot = _ccm._selectedAventurierCardSpot;
+                    datas2.UpdateAventurierTexts();
                     AventurierDeckManager._aventurierDeck.Add(cardPrefab);
                     datas2._ddm = this._ccm;
                 }
@@ -203,6 +206,7 @@ public class GameController : MonoBehaviour {
                     datas1._battleValue = int.Parse(card.Attributes["resistance"].Value);
                     datas1._discardPrice = int.Parse(card.Attributes["defausse"].Value);
                     datas1._effet = int.Parse(card.Attributes["effet"].Value);
+                    datas1.UpdatePlayableTexts();
                     UsureDeckManager._usureDeck.Add(cardPrefab);
                 }
                 _udm.ShuffleDeck(UsureDeckManager._usureDeck);
@@ -311,6 +315,7 @@ public class GameController : MonoBehaviour {
                 PlayedCard._playedCardlist.Clear();
 
                 DonjonDeckManager._donjonDefausseDeck.Add(_cam._choosenOne);
+                _cam._choosenOne.GetComponent<PlayableCard>().UpdatePlayableTexts();
                 _cam._choosenOne.transform.SetParent(this.transform.parent);
                 _cam._choosenOne.transform.position = new Vector3(-100, -100, 0);
                 _cam._choosenOne = null;
@@ -389,6 +394,7 @@ public class GameController : MonoBehaviour {
                     DonjonDeckManager._donjonDefausseDeck.Add(gO);
                     gO.transform.SetParent(this.transform.parent);
                     gO.transform.position = new Vector3(-100, -100, 0);
+                    gO.transform.rotation = Quaternion.Euler(0, 0, 0);
                 }
                 PlayedCard._playedCardlist.Clear();
 

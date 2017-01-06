@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.UI;
 
 public class PlayableCard : MonoBehaviour {
 
@@ -19,6 +19,13 @@ public class PlayableCard : MonoBehaviour {
 
     public bool _hasBeenDestroyed = false;
     public bool _canCopyEffect = false;
+
+    [SerializeField]
+    private Text _nameText = null;
+    [SerializeField]
+    private Text _battleValueText = null;
+    [SerializeField]
+    private Text _effetText = null;
 
     void Start()
     {
@@ -56,11 +63,10 @@ public class PlayableCard : MonoBehaviour {
                 if(GameController._exilePointsSpend + _discardPrice <= GameController._maxExilePoints)
                 {
                     GameController._exilePointsSpend += _discardPrice;
+                    PlayedCard._playedCardlist.Remove(this.gameObject);
                     DonjonDeckManager._donjonExileDeck.Add(this.gameObject);
                     this.transform.SetParent(this.transform.parent.parent);
                     this.transform.position = new Vector3(-100, -100, 0);
-                    /*_gcm._notorietePoints = _gcm._notorietePoints - _discardPrice;
-                    _gcm._notorietePointText.text = "" + _gcm._notorietePoints;*/
                 }
             }
 
@@ -96,6 +102,7 @@ public class PlayableCard : MonoBehaviour {
             {
                 _gcm._cardUsingEffet.GetComponent<PlayableCard>()._effet = this._effet;
             }
+            GameTurnManager.ChangeState(GameState.PreparerDonjon);
         }
         //Permet de gerer le clique si l'effet en cour est le 8
         else if (GameTurnManager._actualGameState == GameState.EffetEnCours && _gcm._waitingEffet == 8)
@@ -105,12 +112,14 @@ public class PlayableCard : MonoBehaviour {
             _gcm._drawnDonjonCard--;
             _gcm._ddm.DrawCard();
             _gcm.UpdateDonjonCombatValue();
+            GameTurnManager.ChangeState(GameState.PreparerDonjon);
         }
         //Permet de gerer le clique si l'effet en cour est le 9
         else if (GameTurnManager._actualGameState == GameState.EffetEnCours && _gcm._waitingEffet == 9)
         {
             _gcm._donjonBonus += this._battleValue;
             _gcm.UpdateDonjonCombatValue();
+            GameTurnManager.ChangeState(GameState.PreparerDonjon);
         }
         //Permet de resoudre le regard 3 (effet 11)
         else if(GameTurnManager._actualGameState == GameState.Regard3 && this.transform.parent == _gcm._regardSpot.transform)
@@ -241,17 +250,54 @@ public class PlayableCard : MonoBehaviour {
 
     }
 
-    //***************************************************************************//
-    //Accesseurs//
-    //***************************************************************************//
-    public int GetBattleValue()
+    public void UpdatePlayableTexts()
     {
-        return _battleValue;
+        _nameText.text = "" + _name;
+        _battleValueText.text = "" + _battleValue;
+        switch (_effet)
+        {
+            case -2:
+                _effetText.text = "-2 point sde notoriété";
+                break;
+            case -1:
+                _effetText.text = "-1 point de notoriété";
+                break;
+            case 0:
+                _effetText.text = "Pas d'effet";
+                break;
+            case 1:
+                _effetText.text = "+2 points de notoriété";
+                break;
+            case 2:
+                _effetText.text = "-1 Niveau";
+                break;
+            case 3:
+                _effetText.text = "Réserve du Donjon";
+                break;
+            case 4:
+                _effetText.text = "Destruction";
+                break;
+            case 5:
+                _effetText.text = "Copie";
+                break;
+            case 6:
+                _effetText.text = "+1 point de notoriété";
+                break;
+            case 7:
+                _effetText.text = "+2 pioches";
+                break;
+            case 8:
+                _effetText.text = "Echange";
+                break;
+            case 9:
+                _effetText.text = "Double";
+                break;
+            case 10:
+                _effetText.text = "+1 Carte";
+                break;
+            case 11:
+                _effetText.text = "Regard 3";
+                break;
+        }
     }
-
-    public int GetDiscardPrice()
-    {
-        return _discardPrice;
-    }
-
 }
